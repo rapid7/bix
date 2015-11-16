@@ -81,27 +81,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _buttons2 = _interopRequireDefault(_buttons);
 	
-	var _extend = __webpack_require__(11);
-	
-	var _extend2 = _interopRequireDefault(_extend);
-	
-	var _forms = __webpack_require__(25);
+	var _forms = __webpack_require__(11);
 	
 	var _forms2 = _interopRequireDefault(_forms);
 	
-	var _grid = __webpack_require__(26);
+	var _grid = __webpack_require__(25);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _headings = __webpack_require__(27);
+	var _headings = __webpack_require__(26);
 	
 	var _headings2 = _interopRequireDefault(_headings);
 	
-	var _images = __webpack_require__(28);
+	var _images = __webpack_require__(27);
 	
 	var _images2 = _interopRequireDefault(_images);
 	
-	var bixDefaults = _extend2["default"](_base2["default"], _buttons2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _images2["default"]);
+	var _utils = __webpack_require__(12);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	var bixDefaults = _utils2["default"].merge(_base2["default"], _buttons2["default"], _forms2["default"], _grid2["default"], _headings2["default"], _images2["default"]);
 	
 	exports["default"] = bixDefaults;
 	module.exports = exports["default"];
@@ -449,34 +449,75 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.__esModule = true;
 	
-	var _utils = __webpack_require__(12);
-	
-	var _utils2 = _interopRequireDefault(_utils);
-	
 	var _reactPrefixer = __webpack_require__(6);
 	
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 	
-	exports["default"] = function () {
-	    var _this = this;
+	var _variables = __webpack_require__(4);
 	
-	    for (var _len = arguments.length, styles = Array(_len), _key = 0; _key < _len; _key++) {
-	        styles[_key] = arguments[_key];
+	var _variables2 = _interopRequireDefault(_variables);
+	
+	var _utils = __webpack_require__(12);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
+	var forms = {
+	    fieldset: {
+	        border: 0,
+	        margin: 0,
+	        padding: "0.75em 0"
+	
+	    },
+	    form: {
+	        display: "block"
+	    },
+	    formLabel: {
+	        display: "block",
+	        margin: "0.5em 0 0.2em"
+	    },
+	    input: _reactPrefixer2["default"]({
+	        backgroundColor: _variables2["default"].backgroundColor,
+	        border: "1px solid " + _variables2["default"].borderColor,
+	        borderRadius: _variables2["default"].borderRadius,
+	        boxShadow: "inset 0 1px 3px #ddd",
+	        color: _variables2["default"].fontColor,
+	        display: "block",
+	        lineHeight: "normal",
+	        outline: 0,
+	        padding: "0.5em 0.6em",
+	        margin: "0.25em 0",
+	        width: "100%"
+	    }),
+	    legend: {
+	        borderColor: "#e5e5e5",
+	        borderStyle: "solid",
+	        borderBottomWidth: 1,
+	        color: _variables2["default"].fontColor,
+	        display: "block",
+	        marginBottom: "0.3em",
+	        padding: "0.3em 0"
+	    },
+	    readOnly: {
+	        backgroundColor: _variables2["default"].borderColor,
+	        color: "#aaa"
 	    }
-	
-	    _utils2["default"].forEach(styles, function (style) {
-	        _utils2["default"].forIn(style, function (value, prop) {
-	            if (!_utils2["default"].isObject(_this[prop])) {
-	                _this[prop] = {};
-	            }
-	
-	            _this[prop] = _utils2["default"].isFunction(value) ? style : _utils2["default"].merge(_this[prop], _reactPrefixer2["default"](value));
-	        });
-	    });
-	
-	    return this;
 	};
 	
+	forms.inputColor = _utils2["default"].merge(forms.input, {
+	    padding: "0.2em 0.5em"
+	});
+	
+	forms.select = _utils2["default"].merge(forms.input, {
+	    height: "2.25em"
+	});
+	
+	forms.selectMultiple = _utils2["default"].merge(forms.input, {
+	    height: "auto"
+	});
+	
+	forms.textarea = forms.input;
+	
+	exports["default"] = forms;
 	module.exports = exports["default"];
 
 /***/ },
@@ -862,93 +903,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
 	
-	var _variables = __webpack_require__(4);
-	
-	var _variables2 = _interopRequireDefault(_variables);
-	
-	var _utils = __webpack_require__(12);
-	
-	var _utils2 = _interopRequireDefault(_utils);
-	
-	var forms = {
-	    fieldset: {
-	        border: 0,
-	        margin: 0,
-	        padding: "0.75em 0"
-	
-	    },
-	    form: {
-	        display: "block"
-	    },
-	    formLabel: {
-	        display: "block",
-	        margin: "0.5em 0 0.2em"
-	    },
-	    input: _reactPrefixer2["default"]({
-	        backgroundColor: _variables2["default"].backgroundColor,
-	        border: "1px solid " + _variables2["default"].borderColor,
-	        borderRadius: _variables2["default"].borderRadius,
-	        boxShadow: "inset 0 1px 3px #ddd",
-	        color: _variables2["default"].fontColor,
-	        display: "block",
-	        lineHeight: "normal",
-	        outline: 0,
-	        padding: "0.5em 0.6em",
-	        margin: "0.25em 0",
-	        width: "100%"
-	    }),
-	    legend: {
-	        borderColor: "#e5e5e5",
-	        borderStyle: "solid",
-	        borderBottomWidth: 1,
-	        color: _variables2["default"].fontColor,
-	        display: "block",
-	        marginBottom: "0.3em",
-	        padding: "0.3em 0"
-	    },
-	    readOnly: {
-	        backgroundColor: _variables2["default"].borderColor,
-	        color: "#aaa"
-	    }
-	};
-	
-	forms.inputColor = _utils2["default"].merge(forms.input, {
-	    padding: "0.2em 0.5em"
-	});
-	
-	forms.select = _utils2["default"].merge(forms.input, {
-	    height: "2.25em"
-	});
-	
-	forms.selectMultiple = _utils2["default"].merge(forms.input, {
-	    height: "auto"
-	});
-	
-	forms.textarea = forms.input;
-	
-	exports["default"] = forms;
-	module.exports = exports["default"];
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*******************************************************************************
-	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
-	 * material contains unpublished, copyrighted work including confidential and
-	 * proprietary information of Rapid7.
-	 ******************************************************************************/
-	
-	"use strict";
-	
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-	
-	exports.__esModule = true;
-	
-	var _reactPrefixer = __webpack_require__(6);
-	
-	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
-	
 	var _utils = __webpack_require__(12);
 	
 	var _utils2 = _interopRequireDefault(_utils);
@@ -1042,7 +996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -1098,7 +1052,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************

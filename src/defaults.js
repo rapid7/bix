@@ -6,13 +6,13 @@
 
 import base from "./base";
 import buttons from "./buttons";
-import extend from "./extend";
 import forms from "./forms";
 import grid from "./grid";
 import headings from "./headings";
 import images from "./images";
+import utils from "./utils";
 
-const bixDefaults = extend(
+const bixDefaults = utils.merge(
     base,
     buttons,
     forms,
