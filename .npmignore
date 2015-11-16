@@ -1,0 +1,14 @@
+.idea/
+src/
+dist/
+.babelrc
+.eslintrc
+.gitignore
+.npmignore
+server.js
+webpack.bix.js
+webpack.bix.minified.js
+webpack.bixDefaults.js
+webpack.bixDefaults.minified.js
+webpack.build.js
+webpack.build.minified.js

@@ -1,0 +1,53 @@
+{
+  "author": "planttheidea",
+  "bugs": {
+    "url": "https://github.com/rapid7/bix/issues"
+  },
+  "dependencies": {
+    "normalize.css": "3.0.3",
+    "radium": "0.15.1",
+    "react": "0.14.2",
+    "react-prefixer": "1.1.4"
+  },
+  "description": "Tools to streamline inline style management for React elements",
+  "devDependencies": {
+    "babel": "5.8.34",
+    "babel-core": "5.8.34",
+    "babel-eslint": "4.1.5",
+    "babel-loader": "5.3.3",
+    "babel-runtime": "5.8.34",
+    "css-loader": "0.23.0",
+    "eslint": "1.9.0",
+    "eslint-friendly-formatter": "1.2.2",
+    "eslint-loader": "1.1.1",
+    "eslint-plugin-react": "3.8.0",
+    "lodash": "3.10.1",
+    "style-loader": "0.13.0",
+    "webpack": "1.12.6",
+    "webpack-dev-server": "1.12.1"
+  },
+  "homepage": "https://github.com/rapid7/bix#readme",
+  "keywords": [
+    "browser",
+    "css",
+    "inline style",
+    "react",
+    "style"
+  ],
+  "license": "MIT",
+  "main": "lib",
+  "name": "bix",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rapid7/bix.git"
+  },
+  "scripts": {
+    "build": "node webpack.build.js",
+    "build-minified": "node webpack.build.minified.js",
+    "compile": "babel -d lib/ src/",
+    "dev": "webpack-dev-server",
+    "dist": "npm run compile && npm run build &&  npm run build-minified",
+    "prepublish": "npm run compile"
+  },
+  "version": "0.14.2"
+}
