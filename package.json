@@ -5,8 +5,8 @@
   },
   "dependencies": {
     "normalize.css": "3.0.3",
-    "radium": "0.15.1",
-    "react": "0.14.2",
+    "radium": ">=0.15.1",
+    "react": ">=0.14.2",
     "react-prefixer": "1.1.4"
   },
   "description": "Tools to streamline inline style management for React elements",
@@ -49,5 +49,5 @@
     "dist": "npm run compile && npm run build &&  npm run build-minified",
     "prepublish": "npm run compile"
   },
-  "version": "1.0.5"
+  "version": "1.0.6"
 }
