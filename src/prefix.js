@@ -4,15 +4,6 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "./prefix";
-import utils from "./utils";
+import Prefixer from "inline-style-prefixer";
 
-export default function(...styles) {
-    let finalStyle = {};
-
-    utils.forEach(styles, (style) => {
-        finalStyle = utils.merge(finalStyle, prefix(style));
-    });
-
-    return finalStyle;
-}
+export default Prefixer.prefix;

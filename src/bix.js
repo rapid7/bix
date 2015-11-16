@@ -4,11 +4,10 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "react-prefixer";
-
 import combine from "./combine";
 import extend from "./extend";
 import isReactComponent from "./isReactComponent";
+import prefix from "./prefix";
 import radium from "./radium";
 import sqwish from "./sqwish";
 import unitlessValues from "./unitlessValues";

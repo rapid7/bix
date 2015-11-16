@@ -8,7 +8,7 @@ import React from "react";
 import Radium from "radium";
 
 import isReactComponent from "./isReactComponent";
-import prefix from "react-prefixer";
+import prefix from "./prefix";
 
 export default function(Element) {
     if (isReactComponent(Element)) {

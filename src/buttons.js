@@ -4,8 +4,7 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "react-prefixer";
-
+import prefix from "./prefix";
 import variables from "./variables";
 
 let buttons = {

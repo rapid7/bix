@@ -4,8 +4,8 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
+import prefix from "./prefix";
 import utils from "./utils";
-import prefix from "react-prefixer";
 
 export default function(...styles) {
     utils.forEach(styles, (style) => {

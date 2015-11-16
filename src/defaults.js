@@ -6,6 +6,7 @@
 
 import base from "./base";
 import buttons from "./buttons";
+import dropdowns from "./dropdowns";
 import forms from "./forms";
 import grid from "./grid";
 import headings from "./headings";
@@ -15,6 +16,7 @@ import utils from "./utils";
 const bixDefaults = utils.merge(
     base,
     buttons,
+    dropdowns,
     forms,
     grid,
     headings,
