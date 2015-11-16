@@ -10,7 +10,7 @@ bix is a convenient way to manage the styles of your React components. It serves
 * [Dynamic styles](#dynamic-styles)
 * [Creating stylesheets](#creating-stylesheets)
 * [Prefixes](#prefixes)
-* [normalize.css](#normalize-css)
+* [normalize.css](#css-normalize)
 * [Defaults](#defaults)
 * [Performance tuning](#performance-tuning)
 * [TODOS](#todos)
@@ -212,7 +212,7 @@ console.log(bix.prefix({
 
 This is useful if you are not storing styles or are doing render-specific styles.
 
-### normalize.css
+### CSS Normalize
 
 Additionally, bix comes with the ability to inject normalize.css into your application using the *normalize* method:
 ```
