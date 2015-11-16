@@ -4,6 +4,6 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import Prefixer from "inline-style-prefixer";
+import prefix from "react-prefixer";
 
-export default Prefixer.prefix;
+export default prefix;

@@ -4,10 +4,10 @@
     "url": "https://github.com/rapid7/bix/issues"
   },
   "dependencies": {
-    "inline-style-prefixer": "0.5.1",
     "normalize.css": "3.0.3",
     "radium": "0.15.1",
-    "react": "0.14.2"
+    "react": "0.14.2",
+    "react-prefixer": "1.1.4"
   },
   "description": "Tools to streamline inline style management for React elements",
   "devDependencies": {

@@ -37,16 +37,16 @@ var dropdowns = {
     }
 };
 
-dropdowns.dropdownRight = utils.merge(utils.clone(dropdowns.dropdown), {
+dropdowns.dropdownRight = utils.merge(dropdowns.dropdown, {
     left:"auto",
     right:0
 });
 
-dropdowns.dropdownActive = utils.merge(utils.clone(dropdowns.dropdown), {
+dropdowns.dropdownActive = utils.merge(dropdowns.dropdown, {
     display:"block"
 });
 
-dropdowns.dropdownRightActive = utils.merge(utils.clone(dropdowns.dropdownRight), {
+dropdowns.dropdownRightActive = utils.merge(dropdowns.dropdownRight, {
     display:"block"
 });
 
