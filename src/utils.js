@@ -4,7 +4,6 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-
 const toString = Object.prototype.toString;
 
 export default {
@@ -107,44 +106,46 @@ export default {
         });
     },
 
-    merge(target,source) {
+    merge(target, ...sources) {
         var dest;
 
-        if (this.isArray(source)) {
-            if (!this.isArray(target)) {
-                console.error("Error: Trying to merge array with non-array.");
-                return dest;
-            }
-
-            dest = [].concat(target || []);
-
-            this.forEach(source, (item,i) => {
-                if (this.isUndefined(dest[i])) {
-                    dest[i] = item;
-                } else if (this.isObject(item) && !this.isFunction(item)) {
-                    dest[i] = this.merge(target[i],item);
-                } else {
-                    if (target.indexOf(item) === -1) {
-                        dest[i] = item;
-                    }
+        this.forEach(sources, (source) => {
+            if (this.isArray(source)) {
+                if (!this.isArray(target)) {
+                    console.error("Error: Trying to merge array with non-array.");
+                    return dest;
                 }
-            });
-        } else {
-            dest = {};
 
-            if (target && this.isObject(target) && !this.isFunction(target)) {
-                this.forIn(target, (value,key) => {
-                    dest[key] = value;
+                dest = [].concat(target || []);
+
+                this.forEach(source, (item,i) => {
+                    if (this.isUndefined(dest[i])) {
+                        dest[i] = item;
+                    } else if (this.isObject(item) && !this.isFunction(item)) {
+                        dest[i] = this.merge(target[i],item);
+                    } else {
+                        if (target.indexOf(item) === -1) {
+                            dest[i] = item;
+                        }
+                    }
+                });
+            } else {
+                dest = {};
+
+                if (target && this.isObject(target) && !this.isFunction(target)) {
+                    this.forIn(target, (value,key) => {
+                        dest[key] = value;
+                    });
+                }
+
+                this.forIn(source, (value,key) => {
+                    dest[key] = this.isUndefined(target) ||
+                    this.isUndefined(target[key]) ||
+                    (!this.isObject(value) &&
+                    !this.isUndefined(value)) ? value : this.merge(target[key], value || {});
                 });
             }
-
-            this.forIn(source, (value,key) => {
-                dest[key] = this.isUndefined(target) ||
-                this.isUndefined(target[key]) ||
-                (!this.isObject(value) &&
-                !this.isUndefined(value)) ? value : this.merge(target[key], value || {});
-            });
-        }
+        });
 
         return dest;
     },
