@@ -107,7 +107,7 @@ export default {
     },
 
     merge(target, ...sources) {
-        var dest;
+        var dest = {};
 
         this.forEach(sources, (source) => {
             if (this.isArray(source)) {
@@ -130,8 +130,6 @@ export default {
                     }
                 });
             } else {
-                dest = {};
-
                 if (target && this.isObject(target) && !this.isFunction(target)) {
                     this.forIn(target, (value,key) => {
                         dest[key] = value;

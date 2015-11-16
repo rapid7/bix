@@ -640,7 +640,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    merge: function merge(target) {
 	        var _this = this;
 	
-	        var dest;
+	        var dest = {};
 	
 	        for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
 	            sources[_key - 1] = arguments[_key];
@@ -667,8 +667,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                });
 	            } else {
-	                dest = {};
-	
 	                if (target && _this.isObject(target) && !_this.isFunction(target)) {
 	                    _this.forIn(target, function (value, key) {
 	                        dest[key] = value;
