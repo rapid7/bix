@@ -83,7 +83,7 @@ export default {
 
         let numObj = parseFloat(obj);
 
-        return !this.isNaN(numObj) && toString.call(obj) === "[object Number]";
+        return !this.isNaN(numObj) && toString.call(numObj) === "[object Number]";
     },
 
     isObject(obj) {
