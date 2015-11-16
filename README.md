@@ -226,12 +226,26 @@ If you are using bix as your sole style manager, or do not already incorporate n
 bix comes with a small library of pre-existing styles that can jumpstart your application. It is not as extensive as something like Bootstrap, but it comes with a solid collection of base styles for items like buttons, form inputs, and grid elements. You can include it in your project by bringing in the file separately, and extending the object with it:
 ```
 import bix from "bix";
-import bixDefaults from "bix/defaults";
+import bixDefaults from "bix/lib/defaults";
 
 componentWillMount() {
     bix
         .extend(bixDefaults);
 }
+```
+
+Or you can just use them straightaway:
+```
+import bix from "bix";
+import bixDefaults from "bix/lib/defaults";
+
+componentWillMount() {
+    bix
+        .style(this, {
+           justOneStyle:bixDefaults.containerFlex
+        });
+}
+```
 
 ### Performance tuning
 
