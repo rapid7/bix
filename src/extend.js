@@ -9,9 +9,9 @@ import {
 } from "./prefixer";
 import utils from "./utils";
 
-let prefix = getPrefixer();
-
 export default function(...styles) {
+    let prefix = getPrefixer();
+
     utils.forEach(styles, (style) => {
         utils.forIn(style, (value, prop) => {
             if (!utils.isObject(this[prop])) {

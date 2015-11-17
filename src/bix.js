@@ -46,8 +46,7 @@ const setProperty = {
     }
 };
 
-let prefix = getPrefixer(),
-    bix = Object.create({
+let bix = Object.create({
     application(app) {
         setProperty.readonly(this, "$$app", app);
 
@@ -74,7 +73,8 @@ let prefix = getPrefixer(),
     },
 
     prefix(...styles) {
-        let prefixedStyles = {};
+        let prefix = getPrefixer(),
+            prefixedStyles = {};
 
         utils.forEach(styles, (style) => {
             prefixedStyles = utils.merge(prefixedStyles, prefix(style));
@@ -98,7 +98,9 @@ let prefix = getPrefixer(),
     },
 
     setUserAgent(userAgent) {
-        prefix = setPrefixerByUserAgent(userAgent);
+        setPrefixerByUserAgent(userAgent);
+
+        return this;
     },
 
     styles(component, ...styles) {
@@ -156,6 +158,8 @@ let prefix = getPrefixer(),
     },
 
     stylesheet(id, ...styles) {
+        let prefix = getPrefixer();
+
         if (!utils.isString(id) && utils.isObject(id)) {
             if (id.displayName) {
                 id = id.displayName;

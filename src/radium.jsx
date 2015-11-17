@@ -12,9 +12,9 @@ import {
     default as getPrefixer
 } from "./prefixer";
 
-let prefix = getPrefixer();
-
 export default function(Element) {
+    let prefix = getPrefixer();
+
     if (isReactComponent(Element)) {
         return Radium(Element);
     }

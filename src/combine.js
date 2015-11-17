@@ -9,10 +9,9 @@ import {
 } from "./prefixer";
 import utils from "./utils";
 
-let prefix = getPrefixer();
-
 export default function(...styles) {
-    let finalStyle = {};
+    let finalStyle = {},
+        prefix = getPrefixer();
 
     utils.forEach(styles, (style) => {
         finalStyle = utils.merge(finalStyle, prefix(style));
