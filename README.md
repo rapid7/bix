@@ -11,6 +11,7 @@ bix is a convenient way to manage the styles of your React components. It serves
 * [Creating stylesheets](#creating-stylesheets)
 * [Prefixes](#prefixes)
 * [normalize.css](#css-normalize)
+* [Isomorphic apps](#isomorphic-apps)
 * [Defaults](#defaults)
 * [Performance tuning](#performance-tuning)
 * [TODOS](#todos)
@@ -44,7 +45,9 @@ componentWillMount() {
 }
 ```
 
-All styles your store in bix are automatically prefixed using [inline-style-prefixer](https://github.com/rofrischmann/inline-style-prefixer), the same prefixer that Radium uses for it's own autoprefixing. Usually this method is used for styles used across the entire application, so placing this in your entry JavaScript file (for Webpack / Browserify) or at the top of your closure will ensure that the styles are available to components downstream.
+Usually this method is used for styles used across the entire application, so placing this in your entry JavaScript file (for Webpack / Browserify) or at the top of your closure will ensure that the styles are available to components downstream. 
+
+Also, you can rest easy writing your styles. All styles your store in bix are automatically prefixed using [inline-style-prefixer](https://github.com/rofrischmann/inline-style-prefixer), the same prefixer that Radium uses for it's own autoprefixing, so you can just focus on writing the styles you want.
 
 ### Component styles
 
@@ -220,6 +223,15 @@ bix.normalize();
 ```
 
 If you are using bix as your sole style manager, or do not already incorporate normalize.css, it is recommended.
+
+### Isomorphic apps
+
+If your application is built server-side but still want to leverage the prefixing capabilities in bix, you can set a custom userAgent with the *setUserAgent* method:
+```
+bix.setUserAgent("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:42.0) Gecko/20100101 Firefox/42.0");
+```
+
+This will allow your server-side application to prefix based on the userAgent that you pass to it. If you plan to use this method, this needs to run before any other style-related methods (extend, styles, stylesheet, etc) are run.
 
 ### Defaults
 
