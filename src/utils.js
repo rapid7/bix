@@ -7,6 +7,12 @@
 const toString = Object.prototype.toString;
 
 export default {
+    bind(fn, thisArg) {
+        return function bindWrapper(...args) {
+            return fn.apply(thisArg, args);
+        };
+    },
+
     ceil(value) {
         return Math.ceil(value);
     },

@@ -354,6 +354,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	var toString = Object.prototype.toString;
 	
 	exports["default"] = {
+	    bind: function bind(fn, thisArg) {
+	        return function bindWrapper() {
+	            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                args[_key] = arguments[_key];
+	            }
+	
+	            return fn.apply(thisArg, args);
+	        };
+	    },
+	
 	    ceil: function ceil(value) {
 	        return Math.ceil(value);
 	    },
@@ -458,8 +468,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        var dest = {};
 	
-	        for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	            sources[_key - 1] = arguments[_key];
+	        for (var _len2 = arguments.length, sources = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+	            sources[_key2 - 1] = arguments[_key2];
 	        }
 	
 	        this.forEach(sources, function (source) {
