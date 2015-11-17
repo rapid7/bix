@@ -9,7 +9,7 @@ import {
 } from "./prefixer";
 import utils from "./utils";
 
-let prefix = getPrefixer().prefix;
+let prefix = getPrefixer();
 
 export default function(...styles) {
     utils.forEach(styles, (style) => {

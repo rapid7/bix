@@ -12,7 +12,7 @@ import {
     default as getPrefixer
 } from "./prefixer";
 
-let prefix = getPrefixer().prefix;
+let prefix = getPrefixer();
 
 export default function(Element) {
     if (isReactComponent(Element)) {

@@ -139,7 +139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	};
 	
-	var _prefix = _prefixer2["default"]().prefix,
+	var _prefix = _prefixer2["default"](),
 	    bix = _Object$create({
 	    application: function application(app) {
 	        setProperty.readonly(this, "$$app", app);
@@ -199,7 +199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    setUserAgent: function setUserAgent(userAgent) {
-	        _prefix = _prefixer.setPrefixerByUserAgent(userAgent).prefix;
+	        _prefix = _prefixer.setPrefixerByUserAgent(userAgent);
 	    },
 	
 	    styles: function styles(component) {
@@ -442,7 +442,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var prefix = _prefixer2["default"]().prefix;
+	var prefix = _prefixer2["default"]();
 	
 	exports["default"] = function () {
 	    var finalStyle = {};
@@ -487,11 +487,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	function setPrefixerByUserAgent(userAgent) {
 	    prefixer = new _inlineStylePrefixer2["default"](userAgent);
 	
-	    return prefixer;
+	    return prefixer.prefix;
 	}
 	
 	function getPrefixer() {
-	    return prefixer;
+	    return prefixer.prefix;
 	}
 	
 	;
@@ -1957,7 +1957,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var prefix = _prefixer2["default"]().prefix;
+	var prefix = _prefixer2["default"]();
 	
 	exports["default"] = function () {
 	    var _this = this;
@@ -2061,7 +2061,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _prefixer2 = _interopRequireDefault(_prefixer);
 	
-	var prefix = _prefixer2["default"]().prefix;
+	var prefix = _prefixer2["default"]();
 	
 	exports["default"] = function (Element) {
 	    if (_isReactComponent2["default"](Element)) {

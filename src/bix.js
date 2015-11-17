@@ -46,7 +46,7 @@ const setProperty = {
     }
 };
 
-let prefix = getPrefixer().prefix,
+let prefix = getPrefixer(),
     bix = Object.create({
     application(app) {
         setProperty.readonly(this, "$$app", app);
@@ -98,7 +98,7 @@ let prefix = getPrefixer().prefix,
     },
 
     setUserAgent(userAgent) {
-        prefix = setPrefixerByUserAgent(userAgent).prefix;
+        prefix = setPrefixerByUserAgent(userAgent);
     },
 
     styles(component, ...styles) {

@@ -11,9 +11,9 @@ let prefixer = new Prefixer();
 export function setPrefixerByUserAgent(userAgent) {
     prefixer = new Prefixer(userAgent);
 
-    return prefixer;
+    return prefixer.prefix;
 }
 
 export default function getPrefixer() {
-    return prefixer;
+    return prefixer.prefix;
 };
