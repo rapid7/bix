@@ -4,7 +4,6 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "./prefix";
 import variables from "./variables";
 import utils from "./utils";
 
@@ -22,7 +21,7 @@ let forms = {
         display:"block",
         margin:"0.5em 0 0.2em"
     },
-    input:prefix({
+    input:{
         backgroundColor:variables.backgroundColor,
         border:"1px solid " + variables.borderColor,
         borderRadius:variables.borderRadius,
@@ -34,7 +33,7 @@ let forms = {
         padding:"0.5em 0.6em",
         margin:"0.25em 0",
         width:"100%"
-    }),
+    },
     legend:{
         borderColor:"#e5e5e5",
         borderStyle:"solid",

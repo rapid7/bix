@@ -4,7 +4,6 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "./prefix";
 import variables from "./variables";
 import utils from "./utils";
 
@@ -12,7 +11,7 @@ var dropdowns = {
     dropdownContainer:{
         position:"relative"
     },
-    dropdown:prefix({
+    dropdown:{
         backgroundColor:variables.white,
         border:"1px solid #ccc",
         borderRadius:variables.borderRadius,
@@ -25,7 +24,7 @@ var dropdowns = {
         position:"absolute",
         top:"100%",
         zIndex:1000
-    }),
+    },
     dropdownItem:{
         display:"block",
         margin:0,

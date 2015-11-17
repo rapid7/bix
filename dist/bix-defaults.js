@@ -81,27 +81,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _buttons2 = _interopRequireDefault(_buttons);
 	
-	var _dropdowns = __webpack_require__(12);
+	var _dropdowns = __webpack_require__(6);
 	
 	var _dropdowns2 = _interopRequireDefault(_dropdowns);
 	
-	var _forms = __webpack_require__(26);
+	var _forms = __webpack_require__(20);
 	
 	var _forms2 = _interopRequireDefault(_forms);
 	
-	var _grid = __webpack_require__(27);
+	var _grid = __webpack_require__(21);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _headings = __webpack_require__(28);
+	var _headings = __webpack_require__(22);
 	
 	var _headings2 = _interopRequireDefault(_headings);
 	
-	var _images = __webpack_require__(29);
+	var _images = __webpack_require__(23);
 	
 	var _images2 = _interopRequireDefault(_images);
 	
-	var _utils = __webpack_require__(13);
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -223,16 +223,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.__esModule = true;
 	
-	var _prefix = __webpack_require__(6);
-	
-	var _prefix2 = _interopRequireDefault(_prefix);
-	
 	var _variables = __webpack_require__(4);
 	
 	var _variables2 = _interopRequireDefault(_variables);
 	
 	var buttons = {
-	    button: _prefix2["default"]({
+	    button: {
 	        border: "1px solid " + _variables2["default"].borderColor,
 	        backgroundColor: _variables2["default"].backgroundColor,
 	        borderRadius: _variables2["default"].borderRadius,
@@ -260,12 +256,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ":hover": {
 	            backgroundColor: "#d5d5d5"
 	        }
-	    }),
-	    buttonDisabled: _prefix2["default"]({
+	    },
+	    buttonDisabled: {
 	        border: 0,
 	        cursor: "not-allowed",
 	        opacity: 0.4
-	    })
+	    }
 	};
 	
 	exports["default"] = buttons;
@@ -287,204 +283,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.__esModule = true;
 	
-	var _reactPrefixer = __webpack_require__(7);
-	
-	var _reactPrefixer2 = _interopRequireDefault(_reactPrefixer);
-
-	exports["default"] = _reactPrefixer2["default"];
-	module.exports = exports["default"];
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _prefix = __webpack_require__(8);
-	
-	var _prefix2 = _interopRequireDefault(_prefix);
-	
-	var _properties = __webpack_require__(9);
-	
-	var _properties2 = _interopRequireDefault(_properties);
-	
-	var _animatableValues = __webpack_require__(10);
-	
-	var _animatableValues2 = _interopRequireDefault(_animatableValues);
-	
-	var _CssSupportsPolyfill = __webpack_require__(11);
-	
-	var _CssSupportsPolyfill2 = _interopRequireDefault(_CssSupportsPolyfill);
-	
-	function camelToKebab(str) {
-	    return str.replace(/\W+/g, "-").replace(/([a-z\d])([A-Z])/g, "$1-$2").toLowerCase();
-	}
-	
-	function applyPrefixes(obj) {
-	    if (typeof obj === "object" && !!obj) {
-	        Object.keys(obj).forEach(function (key) {
-	            var realKey = key;
-	
-	            if (typeof obj[key] === "object" && !!obj[key]) {
-	                obj[key] = applyPrefixes(obj[key]);
-	            } else if (_properties2["default"].indexOf(key) !== -1 && !(0, _CssSupportsPolyfill2["default"])(camelToKebab(key))) {
-	                var value = obj[key];
-	
-	                realKey = _prefix2["default"].js + key.charAt(0).toUpperCase() + key.slice(1);
-	
-	                delete obj[key];
-	                obj[realKey] = value;
-	            }
-	
-	            if (realKey === "display" && obj[realKey] === "flex" && !(0, _CssSupportsPolyfill2["default"])("display", "flex")) {
-	                obj[realKey] = _prefix2["default"] === "ms" ? "-ms-flexbox" : _prefix2["default"].css + "flex";
-	            }
-	
-	            if (key === "transition") {
-	                _animatableValues2["default"].forEach(function (animatableValue) {
-	                    var kebabValue = camelToKebab(animatableValue);
-	
-	                    if (!(0, _CssSupportsPolyfill2["default"])(kebabValue)) {
-	                        var re = new RegExp(kebabValue, "g");
-	
-	                        obj[realKey] = obj[realKey].replace(re, _prefix2["default"].css + kebabValue);
-	                    }
-	                });
-	            }
-	        });
-	    }
-	
-	    return obj;
-	}
-	
-	exports["default"] = applyPrefixes;
-	module.exports = exports["default"];
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var styles = window.getComputedStyle(document.documentElement, ""),
-	    prefix = Array.prototype.slice.call(styles).join("").match(/-(moz|webkit|ms)-/)[1] || styles.OLink === "" && ["", "o"],
-	    ret = {
-	    css: "-" + prefix + "-",
-	    js: prefix
-	};
-	
-	if (ret.js !== "ms") {
-	    ret.js = ret.js.charAt(0).toUpperCase() + ret.js.slice(1);
-	}
-	
-	exports["default"] = ret;
-	module.exports = exports["default"];
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports["default"] = ["alignContent", "alignItems", "alignSelf", "animation", "animationDelay", "animationDirection", "animationDuration", "animationFillMode", "animationIterationCount", "animationName", "animationPlayState", "animationTimingFunction", "appearance", "aspectRatio", "backfaceVisibility", "backgroundClip", "borderImage", "borderImageSlice", "boxShadow", "columnCount", "columnFill", "columnGap", "columnRule", "columnRuleColor", "columnRuleStyle", "columnRuleWidth", "columnSpan", "columnWidth", "columns", "flex", "flexBasis", "flexDirection", "flexFlow", "flexGrow", "flexShrink", "flexWrap", "fontFeatureSettings", "fontKearning", "fontVariantLigatures", "justifyContent", "grid", "gridArea", "gridAutoColumns", "gridAutoFlow", "gridAutoRows", "gridColumn", "gridColumnEnd", "gridColumnStart", "gridRow", "gridRowEnd", "gridRowStart", "gridTemplate", "gridTemplateAreas", "gridTemplateColumns", "gridTemplateRows", "hyphens", "lineBreak", "perspective", "perspectiveOrigin", "perspectiveOriginX", "perspectiveOriginY", "rubyPosition", "scrollSnapCoordinate", "scrollSnapDestination", "scrollSnapPoints", "scrollSnapPointsX", "scrollSnapPointsY", "scrollSnapType", "tabSize", "textDecoration", "textDecorationColor", "textDecorationLine", "textDecorationStyle", "textOrientation", "textSizeAdjust", "transform", "transition", "transformOrigin", "transformOriginX", "transformOriginY", "transformOriginZ", "transformStyle", "transitionProperty", "transitionDuration", "transitionTimingFunction", "transitionDelay", "userModify", "userSelect"];
-	module.exports = exports["default"];
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports["default"] = ["columnCount", "columnGap", "columnRule", "columnRuleColor", "columnRuleWidth", "columns", "flex", "flexBasis", "flexGrow", "flexShrink", "order", "perspective", "perspectiveOrigin", "perspectiveOriginX", "perspectiveOriginY", "scrollSnapCoordinate", "scrollSnapDirection", "textDecoration", "textDecorationColor", "transform", "transformOrigin", "transformOriginX", "transformOriginY", "transformOriginZ", "transformStyle"];
-	module.exports = exports["default"];
-
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var el = document.createElement("div"),
-	    camelRe = /-([a-z]|[0-9])/ig,
-	    support,
-	    camel;
-	
-	exports["default"] = function (prop, value) {
-	    // If no value is supplied, use "inherit"
-	    value = arguments.length === 2 ? value : "inherit";
-	
-	    // Try the native standard method first
-	    if ("CSS" in window && "supports" in window.CSS) {
-	        return window.CSS.supports(prop, value);
-	    }
-	
-	    // Check Opera's native method
-	    if ("supportsCSS" in window) {
-	        return window.supportsCSS(prop, value);
-	    }
-	
-	    // Convert to camel-case for DOM interactions
-	    camel = prop.replace(camelRe, function (all, letter) {
-	        return (letter + "").toUpperCase();
-	    });
-	
-	    // Check if the property is supported
-	    support = camel in el.style;
-	
-	    // Assign the property and value to invoke
-	    // the CSS interpreter
-	    el.style.cssText = prop + ":" + value;
-	
-	    // Ensure both the property and value are
-	    // supported and return
-	    return support && el.style[camel] !== "";
-	};
-	
-	module.exports = exports["default"];
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*******************************************************************************
-	 * COPYRIGHT (C) 2015, Rapid7 LLC, Boston, MA, USA. All rights reserved. This
-	 * material contains unpublished, copyrighted work including confidential and
-	 * proprietary information of Rapid7.
-	 ******************************************************************************/
-	
-	"use strict";
-	
-	var _interopRequireDefault = __webpack_require__(2)["default"];
-	
-	exports.__esModule = true;
-	
-	var _prefix = __webpack_require__(6);
-	
-	var _prefix2 = _interopRequireDefault(_prefix);
-	
 	var _variables = __webpack_require__(4);
 	
 	var _variables2 = _interopRequireDefault(_variables);
 	
-	var _utils = __webpack_require__(13);
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -492,7 +295,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    dropdownContainer: {
 	        position: "relative"
 	    },
-	    dropdown: _prefix2["default"]({
+	    dropdown: {
 	        backgroundColor: _variables2["default"].white,
 	        border: "1px solid #ccc",
 	        borderRadius: _variables2["default"].borderRadius,
@@ -505,7 +308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        position: "absolute",
 	        top: "100%",
 	        zIndex: 1000
-	    }),
+	    },
 	    dropdownItem: {
 	        display: "block",
 	        margin: 0,
@@ -534,7 +337,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 13 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -545,7 +348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	"use strict";
 	
-	var _Object$keys = __webpack_require__(14)["default"];
+	var _Object$keys = __webpack_require__(8)["default"];
 	
 	exports.__esModule = true;
 	var toString = Object.prototype.toString;
@@ -727,43 +530,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 14 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = { "default": __webpack_require__(15), __esModule: true };
+	module.exports = { "default": __webpack_require__(9), __esModule: true };
 
 /***/ },
-/* 15 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(16);
-	module.exports = __webpack_require__(22).Object.keys;
+	__webpack_require__(10);
+	module.exports = __webpack_require__(16).Object.keys;
 
 /***/ },
-/* 16 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 19.1.2.14 Object.keys(O)
-	var toObject = __webpack_require__(17);
+	var toObject = __webpack_require__(11);
 	
-	__webpack_require__(19)('keys', function($keys){
+	__webpack_require__(13)('keys', function($keys){
 	  return function keys(it){
 	    return $keys(toObject(it));
 	  };
 	});
 
 /***/ },
-/* 17 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// 7.1.13 ToObject(argument)
-	var defined = __webpack_require__(18);
+	var defined = __webpack_require__(12);
 	module.exports = function(it){
 	  return Object(defined(it));
 	};
 
 /***/ },
-/* 18 */
+/* 12 */
 /***/ function(module, exports) {
 
 	// 7.2.1 RequireObjectCoercible(argument)
@@ -773,13 +576,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// most Object methods by ES6 should accept primitives
-	var $export = __webpack_require__(20)
-	  , core    = __webpack_require__(22)
-	  , fails   = __webpack_require__(25);
+	var $export = __webpack_require__(14)
+	  , core    = __webpack_require__(16)
+	  , fails   = __webpack_require__(19);
 	module.exports = function(KEY, exec){
 	  var fn  = (core.Object || {})[KEY] || Object[KEY]
 	    , exp = {};
@@ -788,12 +591,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 20 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var global    = __webpack_require__(21)
-	  , core      = __webpack_require__(22)
-	  , ctx       = __webpack_require__(23)
+	var global    = __webpack_require__(15)
+	  , core      = __webpack_require__(16)
+	  , ctx       = __webpack_require__(17)
 	  , PROTOTYPE = 'prototype';
 	
 	var $export = function(type, name, source){
@@ -839,7 +642,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = $export;
 
 /***/ },
-/* 21 */
+/* 15 */
 /***/ function(module, exports) {
 
 	// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -848,18 +651,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
 
 /***/ },
-/* 22 */
+/* 16 */
 /***/ function(module, exports) {
 
 	var core = module.exports = {version: '1.2.6'};
 	if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
 
 /***/ },
-/* 23 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// optional / simple context binding
-	var aFunction = __webpack_require__(24);
+	var aFunction = __webpack_require__(18);
 	module.exports = function(fn, that, length){
 	  aFunction(fn);
 	  if(that === undefined)return fn;
@@ -880,7 +683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 24 */
+/* 18 */
 /***/ function(module, exports) {
 
 	module.exports = function(it){
@@ -889,7 +692,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 25 */
+/* 19 */
 /***/ function(module, exports) {
 
 	module.exports = function(exec){
@@ -901,7 +704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 26 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -916,15 +719,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.__esModule = true;
 	
-	var _prefix = __webpack_require__(6);
-	
-	var _prefix2 = _interopRequireDefault(_prefix);
-	
 	var _variables = __webpack_require__(4);
 	
 	var _variables2 = _interopRequireDefault(_variables);
 	
-	var _utils = __webpack_require__(13);
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -942,7 +741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        display: "block",
 	        margin: "0.5em 0 0.2em"
 	    },
-	    input: _prefix2["default"]({
+	    input: {
 	        backgroundColor: _variables2["default"].backgroundColor,
 	        border: "1px solid " + _variables2["default"].borderColor,
 	        borderRadius: _variables2["default"].borderRadius,
@@ -954,7 +753,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        padding: "0.5em 0.6em",
 	        margin: "0.25em 0",
 	        width: "100%"
-	    }),
+	    },
 	    legend: {
 	        borderColor: "#e5e5e5",
 	        borderStyle: "solid",
@@ -988,7 +787,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 27 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -1003,11 +802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.__esModule = true;
 	
-	var _prefix = __webpack_require__(6);
-	
-	var _prefix2 = _interopRequireDefault(_prefix);
-	
-	var _utils = __webpack_require__(13);
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -1027,34 +822,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	            verticalAlign: "top"
 	        };
 	    },
-	    columnFlex: _prefix2["default"]({
+	    columnFlex: {
 	        flexGrow: 1,
 	        flexShrink: 1
-	    }),
-	    columnFlexFixed: _prefix2["default"]({
+	    },
+	    columnFlexFixed: {
 	        flexGrow: 0,
 	        flexShrink: 0
-	    }),
-	    columnFlexGrow: _prefix2["default"]({
+	    },
+	    columnFlexGrow: {
 	        flexGrow: 1,
 	        flexShrink: 0
-	    }),
-	    columnFlexShrink: _prefix2["default"]({
+	    },
+	    columnFlexShrink: {
 	        flexGrow: 0,
 	        flexShrink: 1
-	    }),
+	    },
 	    container: {
 	        display: "block",
 	        marginLeft: "auto",
 	        marginRight: "auto"
 	    },
-	    containerFlex: _prefix2["default"]({
+	    containerFlex: {
 	        alignContent: "stretch",
 	        alignItems: "stretch",
 	        display: "flex",
 	        flexDirection: "row",
 	        width: "100%"
-	    })
+	    }
 	};
 	
 	grid.container = function (width) {
@@ -1067,9 +862,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    width: "100%"
 	});
 	
-	grid.rowFlex = _utils2["default"].merge(grid.containerFlex, _prefix2["default"]({
+	grid.rowFlex = _utils2["default"].merge(grid.containerFlex, {
 	    flexWrap: "nowrap"
-	}));
+	});
 	
 	grid.column_1_12 = grid.column("1/12");
 	grid.column_1_10 = grid.column("1/10");
@@ -1100,7 +895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 28 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -1119,7 +914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _variables2 = _interopRequireDefault(_variables);
 	
-	var _utils = __webpack_require__(13);
+	var _utils = __webpack_require__(7);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
@@ -1156,7 +951,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 29 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*******************************************************************************
@@ -1171,27 +966,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.__esModule = true;
 	
-	var _prefix = __webpack_require__(6);
-	
-	var _prefix2 = _interopRequireDefault(_prefix);
-	
 	var _variables = __webpack_require__(4);
 	
 	var _variables2 = _interopRequireDefault(_variables);
 	
 	exports["default"] = {
-	    imgCircle: _prefix2["default"]({
+	    imgCircle: {
 	        borderRadius: "50%"
-	    }),
+	    },
 	    imgResponsive: {
 	        display: "block",
 	        height: "auto",
 	        maxWidth: "100%"
 	    },
-	    imgThumbnail: _prefix2["default"]({
+	    imgThumbnail: {
 	        border: "5px solid " + _variables2["default"].white,
 	        borderRadius: _variables2["default"].borderRadius
-	    })
+	    }
 	};
 	module.exports = exports["default"];
 

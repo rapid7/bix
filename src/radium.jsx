@@ -8,7 +8,9 @@ import React from "react";
 import Radium from "radium";
 
 import isReactComponent from "./isReactComponent";
-import prefix from "./prefix";
+import {
+    default as prefix
+} from "./prefix";
 
 export default function(Element) {
     if (isReactComponent(Element)) {
@@ -29,9 +31,9 @@ export default function(Element) {
 
         render() {
             var {
-                    children,
-                    style,
-                    ...otherProps
+                children,
+                style,
+                ...otherProps
                 } = this.props;
 
             style = prefix(style);
@@ -55,7 +57,7 @@ export default function(Element) {
                     return <Element
                         style={[style]}
                         {...otherProps}
-                        />;
+                    />;
                 default:
                     return <Element
                         style={[style]}
@@ -66,5 +68,5 @@ export default function(Element) {
         }
     }
 
-    return Radiumbix;
+    return RadiumBixElement;
 };

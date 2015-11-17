@@ -4,7 +4,6 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "./prefix";
 import utils from "./utils";
 
 var grid = {
@@ -23,34 +22,34 @@ var grid = {
             verticalAlign:"top"
         };
     },
-    columnFlex:prefix({
+    columnFlex:{
         flexGrow:1,
         flexShrink:1
-    }),
-    columnFlexFixed:prefix({
+    },
+    columnFlexFixed:{
         flexGrow:0,
         flexShrink:0
-    }),
-    columnFlexGrow:prefix({
+    },
+    columnFlexGrow:{
         flexGrow:1,
         flexShrink:0
-    }),
-    columnFlexShrink:prefix({
+    },
+    columnFlexShrink:{
         flexGrow:0,
         flexShrink:1
-    }),
+    },
     container:{
         display:"block",
         marginLeft:"auto",
         marginRight:"auto"
     },
-    containerFlex:prefix({
+    containerFlex:{
         alignContent:"stretch",
         alignItems:"stretch",
         display:"flex",
         flexDirection:"row",
         width:"100%"
-    })
+    }
 };
 
 grid.container = function(width) {
@@ -63,9 +62,9 @@ grid.containerFull = utils.merge(grid.containerFixed, {
     width:"100%"
 });
 
-grid.rowFlex = utils.merge(grid.containerFlex, prefix({
+grid.rowFlex = utils.merge(grid.containerFlex, {
     flexWrap:"nowrap"
-}));
+});
 
 grid.column_1_12 = grid.column("1/12");
 grid.column_1_10 = grid.column("1/10");

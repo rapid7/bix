@@ -4,6 +4,12 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "react-prefixer";
+import Prefixer from "inline-style-prefixer";
 
-export default prefix;
+let prefixer = new Prefixer();
+
+export function setPrefixerUserAgent(userAgent) {
+    prefixer = new Prefixer(userAgent);
+}
+
+export default prefixer.prefix;

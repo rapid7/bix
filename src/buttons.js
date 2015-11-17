@@ -4,11 +4,10 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "./prefix";
 import variables from "./variables";
 
 let buttons = {
-    button:prefix({
+    button:{
         border:"1px solid " + variables.borderColor,
         backgroundColor:variables.backgroundColor,
         borderRadius:variables.borderRadius,
@@ -24,7 +23,7 @@ let buttons = {
         textDecoration:"none",
         textTransform:"uppercase",
         transition:"background-color " + variables.transitionTiming + " " + variables.transitionEase + ", color " +
-            variables.transitionTiming + " " + variables.transitionEase,
+        variables.transitionTiming + " " + variables.transitionEase,
         userSelect:"none",
         verticalAlign:"middle",
         whiteSpace:"nowrap",
@@ -37,12 +36,12 @@ let buttons = {
         ":hover":{
             backgroundColor:"#d5d5d5"
         }
-    }),
-    buttonDisabled:prefix({
+    },
+    buttonDisabled:{
         border:0,
         cursor:"not-allowed",
         opacity:0.4
-    })
+    }
 };
 
 export default buttons;

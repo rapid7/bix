@@ -7,7 +7,10 @@
 import combine from "./combine";
 import extend from "./extend";
 import isReactComponent from "./isReactComponent";
-import prefix from "./prefix";
+import {
+    default as prefix,
+    setPrefixerUserAgent
+} from "./prefix";
 import radium from "./radium";
 import sqwish from "./sqwish";
 import unitlessValues from "./unitlessValues";
@@ -15,33 +18,33 @@ import utils from "./utils";
 
 // functions to set properties in different ways
 const setProperty = {
-        hidden(obj, prop, value) {
-            Object.defineProperty(obj,prop,{
-                configurable: false,
-                enumerable: false,
-                value: value,
-                writable: true
-            });
-        },
+    hidden(obj, prop, value) {
+        Object.defineProperty(obj,prop,{
+            configurable: false,
+            enumerable: false,
+            value: value,
+            writable: true
+        });
+    },
 
-        permanent(obj, prop, value) {
-            Object.defineProperty(obj,prop,{
-                configurable: false,
-                enumerable: true,
-                value: value,
-                writable: true
-            });
-        },
+    permanent(obj, prop, value) {
+        Object.defineProperty(obj,prop,{
+            configurable: false,
+            enumerable: true,
+            value: value,
+            writable: true
+        });
+    },
 
-        readonly(obj, prop, value) {
-            Object.defineProperty(obj,prop,{
-                configurable: false,
-                enumerable: false,
-                value: value,
-                writable: false
-            });
-        }
-    };
+    readonly(obj, prop, value) {
+        Object.defineProperty(obj,prop,{
+            configurable: false,
+            enumerable: false,
+            value: value,
+            writable: false
+        });
+    }
+};
 
 let bix = Object.create({
     application(app) {
@@ -84,6 +87,8 @@ let bix = Object.create({
             });
         }
     },
+
+    setPrefixerUserAgent,
 
     styles(component, ...styles) {
         if (utils.isUndefined(this.$$app) && this.$$appWarn) {

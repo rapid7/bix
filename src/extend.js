@@ -4,7 +4,9 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "./prefix";
+import {
+    default as prefix
+} from "./prefix";
 import utils from "./utils";
 
 export default function(...styles) {

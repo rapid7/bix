@@ -4,20 +4,19 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import prefix from "./prefix";
 import variables from "./variables";
 
 export default {
-    imgCircle:prefix({
+    imgCircle:{
         borderRadius:"50%"
-    }),
+    },
     imgResponsive:{
         display:"block",
         height:"auto",
         maxWidth:"100%"
     },
-    imgThumbnail:prefix({
+    imgThumbnail:{
         border:"5px solid " + variables.white,
         borderRadius:variables.borderRadius
-    })
+    }
 };
