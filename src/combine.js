@@ -5,9 +5,11 @@
  ******************************************************************************/
 
 import {
-    default as prefix
-} from "./prefix";
+    default as getPrefixer
+} from "./prefixer";
 import utils from "./utils";
+
+let prefix = getPrefixer().prefix;
 
 export default function(...styles) {
     let finalStyle = {};

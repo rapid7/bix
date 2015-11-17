@@ -8,8 +8,12 @@ import Prefixer from "inline-style-prefixer";
 
 let prefixer = new Prefixer();
 
-export function setPrefixerUserAgent(userAgent) {
+export function setPrefixerByUserAgent(userAgent) {
     prefixer = new Prefixer(userAgent);
+
+    return prefixer;
 }
 
-export default prefixer.prefix;
+export default function getPrefixer() {
+    return prefixer;
+};

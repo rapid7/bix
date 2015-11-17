@@ -8,9 +8,9 @@ import combine from "./combine";
 import extend from "./extend";
 import isReactComponent from "./isReactComponent";
 import {
-    default as prefix,
-    setPrefixerUserAgent
-} from "./prefix";
+    default as getPrefixer,
+    setPrefixerByUserAgent
+} from "./prefixer";
 import radium from "./radium";
 import sqwish from "./sqwish";
 import unitlessValues from "./unitlessValues";
@@ -46,7 +46,8 @@ const setProperty = {
     }
 };
 
-let bix = Object.create({
+let prefix = getPrefixer().prefix,
+    bix = Object.create({
     application(app) {
         setProperty.readonly(this, "$$app", app);
 
@@ -72,7 +73,15 @@ let bix = Object.create({
         return this;
     },
 
-    prefix,
+    prefix(...styles) {
+        let prefixedStyles = {};
+
+        utils.forEach(styles, (style) => {
+            prefixedStyles = utils.merge(prefixedStyles, prefix(style));
+        });
+
+        return prefixedStyles;
+    },
 
     radium,
 
@@ -88,7 +97,9 @@ let bix = Object.create({
         }
     },
 
-    setPrefixerUserAgent,
+    setUserAgent(userAgent) {
+        prefix = setPrefixerByUserAgent(userAgent).prefix;
+    },
 
     styles(component, ...styles) {
         if (utils.isUndefined(this.$$app) && this.$$appWarn) {
