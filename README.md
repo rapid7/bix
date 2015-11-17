@@ -44,7 +44,7 @@ componentWillMount() {
 }
 ```
 
-All styles your store in bix are automatically prefixed using [react-prefixer](https://github.com/rapid7/react-prefixer) specifically for your browser, so both your code and it's output are both minimal. Usually this method is used for styles used across the entire application, so placing this in your entry JavaScript file (for Webpack / Browserify) or at the top of your closure will ensure that the styles are available to components downstream.
+All styles your store in bix are automatically prefixed using [inline-style-prefixer](https://github.com/rofrischmann/inline-style-prefixer), the same prefixer that Radium uses for it's own autoprefixing. Usually this method is used for styles used across the entire application, so placing this in your entry JavaScript file (for Webpack / Browserify) or at the top of your closure will ensure that the styles are available to components downstream.
 
 ### Component styles
 
