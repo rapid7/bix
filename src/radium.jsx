@@ -9,10 +9,12 @@ import Radium from "radium";
 
 import isReactComponent from "./isReactComponent";
 import {
-    default as prefix
-} from "./prefix";
+    default as getPrefixer
+} from "./prefixer";
 
 export default function(Element) {
+    let prefix = getPrefixer();
+
     if (isReactComponent(Element)) {
         return Radium(Element);
     }

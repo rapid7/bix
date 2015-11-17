@@ -6,10 +6,14 @@
 
 import Prefixer from "inline-style-prefixer";
 
+import utils from "./utils";
+
 let prefixer = new Prefixer();
 
-export function setPrefixerUserAgent(userAgent) {
+export function setPrefixerByUserAgent(userAgent) {
     prefixer = new Prefixer(userAgent);
 }
 
-export default prefixer.prefix;
+export default function getPrefixer() {
+    return utils.bind(prefixer.prefix, this);
+};

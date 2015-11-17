@@ -89,9 +89,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _isReactComponent2 = _interopRequireDefault(_isReactComponent);
 	
-	var _prefix = __webpack_require__(9);
+	var _prefixer = __webpack_require__(9);
 	
-	var _prefix2 = _interopRequireDefault(_prefix);
+	var _prefixer2 = _interopRequireDefault(_prefixer);
 	
 	var _radium = __webpack_require__(39);
 	
@@ -169,7 +169,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return this;
 	    },
 	
-	    prefix: _prefix2["default"],
+	    prefix: function prefix() {
+	        var prefix = _prefixer2["default"](),
+	            prefixedStyles = {};
+	
+	        for (var _len2 = arguments.length, styles = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	            styles[_key2] = arguments[_key2];
+	        }
+	
+	        _utils2["default"].forEach(styles, function (style) {
+	            prefixedStyles = _utils2["default"].merge(prefixedStyles, prefix(style));
+	        });
+	
+	        return prefixedStyles;
+	    },
 	
 	    radium: _radium2["default"],
 	
@@ -185,7 +198,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    },
 	
-	    setPrefixerUserAgent: _prefix.setPrefixerUserAgent,
+	    setUserAgent: function setUserAgent(userAgent) {
+	        _prefixer.setPrefixerByUserAgent(userAgent);
+	
+	        return this;
+	    },
 	
 	    styles: function styles(component) {
 	        var _this = this,
@@ -207,7 +224,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	
 	        if (_utils2["default"].isObject(component)) {
-	            var _len2, _styles, _key2;
+	            var _len3, _styles, _key3;
 	
 	            var _ret = (function () {
 	                if (_utils2["default"].isUndefined(component._reactInternalInstance)) {
@@ -226,8 +243,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    };
 	                }
 	
-	                for (_len2 = _arguments.length, _styles = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-	                    _styles[_key2 - 1] = _arguments[_key2];
+	                for (_len3 = _arguments.length, _styles = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+	                    _styles[_key3 - 1] = _arguments[_key3];
 	                }
 	
 	                if (!_styles.length) {
@@ -258,6 +275,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    stylesheet: function stylesheet(id) {
+	        var prefix = _prefixer2["default"]();
+	
 	        if (!_utils2["default"].isString(id) && _utils2["default"].isObject(id)) {
 	            if (id.displayName) {
 	                id = id.displayName;
@@ -296,8 +315,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        styleTag.type = "text/css";
 	        styleTag.id = id;
 	
-	        for (var _len3 = arguments.length, styles = Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-	            styles[_key3 - 1] = arguments[_key3];
+	        for (var _len4 = arguments.length, styles = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+	            styles[_key4 - 1] = arguments[_key4];
 	        }
 	
 	        _utils2["default"].forEach(styles, function (block) {
@@ -311,7 +330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        }
 	                    });
 	
-	                    style = _prefix2["default"](style);
+	                    style = prefix(style);
 	
 	                    _utils2["default"].forIn(style, function (value, prop) {
 	                        str += _utils2["default"].kebabCase(prop) + ":" + value + ";";
@@ -419,23 +438,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.__esModule = true;
 	
-	var _prefix = __webpack_require__(9);
+	var _prefixer = __webpack_require__(9);
 	
-	var _prefix2 = _interopRequireDefault(_prefix);
+	var _prefixer2 = _interopRequireDefault(_prefixer);
 	
 	var _utils = __webpack_require__(23);
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
 	exports["default"] = function () {
-	    var finalStyle = {};
+	    var finalStyle = {},
+	        prefix = _prefixer2["default"]();
 	
 	    for (var _len = arguments.length, styles = Array(_len), _key = 0; _key < _len; _key++) {
 	        styles[_key] = arguments[_key];
 	    }
 	
 	    _utils2["default"].forEach(styles, function (style) {
-	        finalStyle = _utils2["default"].merge(finalStyle, _prefix2["default"](style));
+	        finalStyle = _utils2["default"].merge(finalStyle, prefix(style));
 	    });
 	
 	    return finalStyle;
@@ -458,19 +478,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _interopRequireDefault = __webpack_require__(7)["default"];
 	
 	exports.__esModule = true;
-	exports.setPrefixerUserAgent = setPrefixerUserAgent;
+	exports.setPrefixerByUserAgent = setPrefixerByUserAgent;
+	exports["default"] = getPrefixer;
 	
 	var _inlineStylePrefixer = __webpack_require__(10);
 	
 	var _inlineStylePrefixer2 = _interopRequireDefault(_inlineStylePrefixer);
 	
+	var _utils = __webpack_require__(23);
+	
+	var _utils2 = _interopRequireDefault(_utils);
+	
 	var prefixer = new _inlineStylePrefixer2["default"]();
 	
-	function setPrefixerUserAgent(userAgent) {
-	  prefixer = new _inlineStylePrefixer2["default"](userAgent);
+	function setPrefixerByUserAgent(userAgent) {
+	    prefixer = new _inlineStylePrefixer2["default"](userAgent);
 	}
 	
-	exports["default"] = prefixer.prefix;
+	function getPrefixer() {
+	    return _utils2["default"].bind(prefixer.prefix, this);
+	}
+	
+	;
 
 /***/ },
 /* 10 */
@@ -1560,6 +1589,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	var toString = Object.prototype.toString;
 	
 	exports["default"] = {
+	    bind: function bind(fn, thisArg) {
+	        return function bindWrapper() {
+	            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	                args[_key] = arguments[_key];
+	            }
+	
+	            return fn.apply(thisArg, args);
+	        };
+	    },
+	
 	    ceil: function ceil(value) {
 	        return Math.ceil(value);
 	    },
@@ -1664,8 +1703,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        var dest = {};
 	
-	        for (var _len = arguments.length, sources = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	            sources[_key - 1] = arguments[_key];
+	        for (var _len2 = arguments.length, sources = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+	            sources[_key2 - 1] = arguments[_key2];
 	        }
 	
 	        this.forEach(sources, function (source) {
@@ -1925,9 +1964,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.__esModule = true;
 	
-	var _prefix = __webpack_require__(9);
+	var _prefixer = __webpack_require__(9);
 	
-	var _prefix2 = _interopRequireDefault(_prefix);
+	var _prefixer2 = _interopRequireDefault(_prefixer);
 	
 	var _utils = __webpack_require__(23);
 	
@@ -1935,6 +1974,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports["default"] = function () {
 	    var _this = this;
+	
+	    var prefix = _prefixer2["default"]();
 	
 	    for (var _len = arguments.length, styles = Array(_len), _key = 0; _key < _len; _key++) {
 	        styles[_key] = arguments[_key];
@@ -1946,7 +1987,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _this[prop] = {};
 	            }
 	
-	            _this[prop] = _utils2["default"].isFunction(value) ? style : _utils2["default"].merge(_this[prop], _prefix2["default"](value));
+	            _this[prop] = _utils2["default"].isFunction(value) ? style : _utils2["default"].merge(_this[prop], prefix(value));
 	        });
 	    });
 	
@@ -2031,11 +2072,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _isReactComponent2 = _interopRequireDefault(_isReactComponent);
 	
-	var _prefix = __webpack_require__(9);
+	var _prefixer = __webpack_require__(9);
 	
-	var _prefix2 = _interopRequireDefault(_prefix);
+	var _prefixer2 = _interopRequireDefault(_prefixer);
 	
 	exports["default"] = function (Element) {
+	    var prefix = _prefixer2["default"]();
+	
 	    if (_isReactComponent2["default"](Element)) {
 	        return _radium2["default"](Element);
 	    }
@@ -2063,7 +2106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	                var otherProps = _objectWithoutProperties(_props, ["children", "style"]);
 	
-	                style = _prefix2["default"](style);
+	                style = prefix(style);
 	
 	                switch (Element) {
 	                    case "area":

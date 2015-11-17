@@ -5,12 +5,13 @@
  ******************************************************************************/
 
 import {
-    default as prefix
-} from "./prefix";
+    default as getPrefixer
+} from "./prefixer";
 import utils from "./utils";
 
 export default function(...styles) {
-    let finalStyle = {};
+    let finalStyle = {},
+        prefix = getPrefixer();
 
     utils.forEach(styles, (style) => {
         finalStyle = utils.merge(finalStyle, prefix(style));
