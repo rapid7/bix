@@ -848,7 +848,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        flexGrow: 0,
 	        flexShrink: 1
 	    },
-	    container: {
+	    containerFixed: {
 	        display: "block",
 	        marginLeft: "auto",
 	        marginRight: "auto"
