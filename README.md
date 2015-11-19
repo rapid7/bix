@@ -47,7 +47,7 @@ componentWillMount() {
 
 Usually this method is used for styles used across the entire application, so placing this in your entry JavaScript file (for Webpack / Browserify) or at the top of your closure will ensure that the styles are available to components downstream. 
 
-Also, you can rest easy writing your styles. All styles your store in bix are automatically prefixed using [inline-style-prefixer](https://github.com/rofrischmann/inline-style-prefixer), the same prefixer that Radium uses for it's own autoprefixing, so you can just focus on writing the styles you want.
+Also, you can rest easy writing your styles. All styles you store in bix are automatically prefixed using [inline-style-prefixer](https://github.com/rofrischmann/inline-style-prefixer), the same prefixer that Radium uses for it's own autoprefixing, so you can just focus on writing the styles you want.
 
 ### Component styles
 
@@ -126,13 +126,13 @@ If you just want to create a single element for styling, store it in a variable 
 
 ```
 // ReactElement parameter
-var Button = bix.element(<button/>);
+var Button = bix.radium(<button/>);
 
 // string parameter
-var Div = bix.element("div");
+var Div = bix.radium("div");
 
 // ReactComponent parameter
-var A = bix.element(MyCustomLink);
+var A = bix.radium(MyCustomLink);
 ```
 
 Then, simply add those styles to your existing styles and they will be automatically applied:
