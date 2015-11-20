@@ -8,6 +8,8 @@ import combine from "./combine";
 import extend from "./extend";
 import isReactComponent from "./isReactComponent";
 import {
+    getJsPrefix,
+    getPrefixedProperties,
     default as getPrefixer,
     setPrefixerByUserAgent
 } from "./prefixer";
@@ -158,7 +160,8 @@ let bix = Object.create({
     },
 
     stylesheet(id, ...styles) {
-        let prefix = getPrefixer();
+        let prefixedProperties = getPrefixedProperties(),
+            jsPrefix = getJsPrefix();
 
         if (!utils.isString(id) && utils.isObject(id)) {
             if (id.displayName) {
@@ -200,18 +203,24 @@ let bix = Object.create({
 
         utils.forEach(styles, (block) => {
             if (utils.isObject(block)) {
+                let cleanStyle = {};
+
                 utils.forIn(block, (style, key) => {
                     str += key + "{";
 
                     utils.forIn(style, (value, prop) => {
                         if (utils.isNumber(value) && unitlessValues.indexOf(prop) === -1 && !/px/.test(value)) {
-                            style[prop] = value + "px";
+                            value = value + "px";
                         }
+
+                        if (prefixedProperties.indexOf(prop) !== -1) {
+                            prop = jsPrefix + prop.charAt(0).toUpperCase() + prop.slice(1);
+                        }
+
+                        cleanStyle[prop] = value;
                     });
 
-                    style = prefix(style);
-
-                    utils.forIn(style, (value, prop) => {
+                    utils.forIn(cleanStyle, (value, prop) => {
                         str += utils.kebabCase(prop) + ":" + value + ";";
                     });
 
