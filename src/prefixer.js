@@ -8,7 +8,7 @@ import Prefixer from "inline-style-prefixer";
 
 import utils from "./utils";
 
-var prefixer = new Prefixer(),
+let prefixer = new Prefixer(),
     properties = [];
 
 function populatePrefixedProperties() {
