@@ -271,7 +271,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    stylesheet: function stylesheet(id) {
-	        var prefix = _prefixer2["default"]();
+	        var prefixedProperties = _prefixer.getPrefixedProperties(),
+	            jsPrefix = _prefixer.getJsPrefix();
 	
 	        if (!_utils2["default"].isString(id) && _utils2["default"].isObject(id)) {
 	            if (id.displayName) {
@@ -317,25 +318,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        _utils2["default"].forEach(styles, function (block) {
 	            if (_utils2["default"].isObject(block)) {
-	                _utils2["default"].forIn(block, function (style, key) {
-	                    str += key + "{";
+	                (function () {
+	                    var cleanStyle = {};
 	
-	                    _utils2["default"].forIn(style, function (value, prop) {
-	                        if (_utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(prop) === -1 && !/px/.test(value)) {
-	                            style[prop] = value + "px";
-	                        }
+	                    _utils2["default"].forIn(block, function (style, key) {
+	                        str += key + "{";
+	
+	                        _utils2["default"].forIn(style, function (value, prop) {
+	                            if (_utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(prop) === -1 && !/px/.test(value)) {
+	                                value = value + "px";
+	                            }
+	
+	                            if (prefixedProperties.indexOf(prop) !== -1) {
+	                                prop = jsPrefix + prop.charAt(0).toUpperCase() + prop.slice(1);
+	                            }
+	
+	                            cleanStyle[prop] = value;
+	                        });
+	
+	                        _utils2["default"].forIn(cleanStyle, function (value, prop) {
+	                            str += _utils2["default"].kebabCase(prop) + ":" + value + ";";
+	                        });
+	
+	                        str += "}";
 	                    });
 	
-	                    style = prefix(style);
-	
-	                    _utils2["default"].forIn(style, function (value, prop) {
-	                        str += _utils2["default"].kebabCase(prop) + ":" + value + ";";
-	                    });
-	
-	                    str += "}";
-	                });
-	
-	                currentStyles = _combine2["default"](currentStyles, block);
+	                    currentStyles = _combine2["default"](currentStyles, block);
+	                })();
 	            }
 	        });
 	
@@ -410,6 +419,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	exports.__esModule = true;
+	exports.getCssPrefix = getCssPrefix;
+	exports.getJsPrefix = getJsPrefix;
+	exports.getPrefixedProperties = getPrefixedProperties;
 	exports.setPrefixerByUserAgent = setPrefixerByUserAgent;
 	exports["default"] = getPrefixer;
 	
@@ -423,10 +435,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var prefixer = new _inlineStylePrefixer2["default"]();
+	var prefixer = new _inlineStylePrefixer2["default"](),
+	    properties = [];
+	
+	function populatePrefixedProperties() {
+	    var prefixedProperties = [];
+	
+	    _utils2["default"].forIn(prefixer._requiresPrefix, function (requiresPrefix, property) {
+	        if (requiresPrefix) {
+	            prefixedProperties[prefixedProperties.length] = property;
+	        }
+	    });
+	
+	    return prefixedProperties;
+	}
+	
+	properties = populatePrefixedProperties();
+	
+	function getCssPrefix() {
+	    return prefixer.cssPrefix;
+	}
+	
+	function getJsPrefix() {
+	    return prefixer.jsPrefix;
+	}
+	
+	function getPrefixedProperties() {
+	    return properties;
+	}
 	
 	function setPrefixerByUserAgent(userAgent) {
 	    prefixer = new _inlineStylePrefixer2["default"](userAgent);
+	    properties = populatePrefixedProperties();
 	}
 	
 	function getPrefixer() {
