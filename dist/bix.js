@@ -106,7 +106,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _utils2 = _interopRequireDefault(_utils);
 	
 	// functions to set properties in different ways
-	var setProperty = {
+	var noPxAdded = /(px|vh|vw|em|[%]|ex|cm|mm|in|pt|pc|ch|rem|vmin|vmax)/,
+	    setProperty = {
 	    hidden: function hidden(obj, prop, value) {
 	        Object.defineProperty(obj, prop, {
 	            configurable: false,
@@ -136,12 +137,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	var bix = Object.create({
-	    application: function application(app) {
-	        setProperty.readonly(this, "$$app", app);
-	
-	        return this;
-	    },
-	
 	    combine: _combine2["default"],
 	
 	    extend: _extend2["default"],
@@ -183,15 +178,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	    radium: _radium2["default"],
 	
 	    render: function render(component) {
-	        if (!_utils2["default"].isUndefined(this.$$app)) {
-	            this.$$app.forceUpdate();
-	        } else if (_isReactComponent2["default"](component)) {
+	        if (_isReactComponent2["default"](component)) {
 	            component.forceUpdate();
 	        } else {
-	            _utils2["default"].forIn(this.$$components, function (component) {
-	                component.forceUpdate();
+	            _utils2["default"].forIn(this.$$components, function (componentObj) {
+	                if (componentObj.renderOnResize) {
+	                    componentObj.component.forceUpdate();
+	                }
 	            });
 	        }
+	    },
+	
+	    renderOnResize: function renderOnResize(component) {
+	        if (_isReactComponent2["default"](component)) {
+	            var _name = component.displayName;
+	
+	            if (this.$$components[_name]) {
+	                this.$$components[_name].renderOnResize = true;
+	            } else {
+	                this.$$components[_name] = {
+	                    component: component,
+	                    renderOnResize: true,
+	                    styles: {}
+	                };
+	            }
+	        }
+	
+	        return this;
 	    },
 	
 	    setUserAgent: function setUserAgent(userAgent) {
@@ -203,12 +216,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    styles: function styles(component) {
 	        var _this = this,
 	            _arguments = arguments;
-	
-	        if (_utils2["default"].isUndefined(this.$$app) && this.$$appWarn) {
-	            console.warn("Warning: You haven't created a root component, which means each component will be managed independently. This is " + "unavoidable if you are using a different library as your application base, however if you are using React + Flux then providing " + "an application will increase performance of bix and is highly advised. You can do this by running bix.application(this) " + "in the componentWillMount() for your root component.");
-	
-	            this.$$appWarn = false;
-	        }
 	
 	        if (_utils2["default"].isUndefined(component)) {
 	            console.error("Error: no component has been specified.");
@@ -318,33 +325,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        _utils2["default"].forEach(styles, function (block) {
 	            if (_utils2["default"].isObject(block)) {
-	                (function () {
+	                _utils2["default"].forIn(block, function (style, key) {
 	                    var cleanStyle = {};
 	
-	                    _utils2["default"].forIn(block, function (style, key) {
-	                        str += key + "{";
+	                    str += key + "{";
 	
-	                        _utils2["default"].forIn(style, function (value, prop) {
-	                            if (_utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(prop) === -1 && !/px/.test(value)) {
-	                                value = value + "px";
-	                            }
+	                    _utils2["default"].forIn(style, function (value, prop) {
+	                        if (!noPxAdded.test(value) && _utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(prop) === -1) {
+	                            value = value + "px";
+	                        }
 	
-	                            if (prefixedProperties.indexOf(prop) !== -1) {
-	                                prop = jsPrefix + prop.charAt(0).toUpperCase() + prop.slice(1);
-	                            }
+	                        if (prefixedProperties.indexOf(prop) !== -1) {
+	                            prop = jsPrefix + prop.charAt(0).toUpperCase() + prop.slice(1);
+	                        }
 	
-	                            cleanStyle[prop] = value;
-	                        });
-	
-	                        _utils2["default"].forIn(cleanStyle, function (value, prop) {
-	                            str += _utils2["default"].kebabCase(prop) + ":" + value + ";";
-	                        });
-	
-	                        str += "}";
+	                        cleanStyle[prop] = value;
 	                    });
 	
-	                    currentStyles = _combine2["default"](currentStyles, block);
-	                })();
+	                    _utils2["default"].forIn(cleanStyle, function (value, prop) {
+	                        str += _utils2["default"].kebabCase(prop) + ":" + value + ";";
+	                    });
+	
+	                    str += "}";
+	                });
+	
+	                currentStyles = _combine2["default"](currentStyles, block);
 	            }
 	        });
 	
@@ -357,8 +362,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
-	setProperty.hidden(bix, "$$app");
-	setProperty.hidden(bix, "$$appWarn", true);
 	setProperty.readonly(bix, "$$components", {});
 	setProperty.readonly(bix, "$$stylesheets", {});
 	
@@ -1639,13 +1642,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    isNumber: function isNumber(obj) {
-	        obj = obj.toString().replace(/,/g, ".");
-	
-	        if (/[%]/.test(obj)) {
-	            return false;
-	        }
-	
-	        var numObj = parseFloat(obj);
+	        var numObj = parseFloat(obj.toString().replace(/,/g, "."));
 	
 	        return !this.isNaN(numObj) && toString.call(numObj) === "[object Number]";
 	    },
