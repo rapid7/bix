@@ -244,6 +244,12 @@ let bix = Object.create({
     }
 });
 
+function delayRenderOnResize() {
+    window.setTimeout(utils.bind(bix.render, bix), 1);
+}
+
+window.addEventListener("resize", delayRenderOnResize);
+
 setProperty.readonly(bix, "$$components", {});
 setProperty.readonly(bix, "$$stylesheets", {});
 

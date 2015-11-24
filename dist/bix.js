@@ -362,6 +362,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	});
 	
+	function delayRenderOnResize() {
+	    window.setTimeout(_utils2["default"].bind(bix.render, bix), 1);
+	}
+	
+	window.addEventListener("resize", delayRenderOnResize);
+	
 	setProperty.readonly(bix, "$$components", {});
 	setProperty.readonly(bix, "$$stylesheets", {});
 	
