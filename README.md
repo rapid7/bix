@@ -263,14 +263,14 @@ componentWillMount() {
 
 As with anything else, the examples above are enough to get you started, but there are a couple of tips that you can use to make sure that your performance is on point.
 
-First, if you are using a fully-React application, you can set an application with the *application* method:
+First, if you have styles that are dependent on window size and require recalculation on resize, you can add this to your component:
 ```
 componentWillMount() {
-    bix.application(this);
+    bix.renderOnResize(this);
 }
 ```
 
-This will aide in any re-renders that bix will need to perform. You should run this in the top-level component's *componentWillMount*.
+This will aide in any re-renders that bix will need to perform. This will also re-render all child components, so keep the number of declarations small and as top-level as possible.
 
 Second, when creating component-specific styles, you can check to see if the component's style already exists before adding them:
 ```

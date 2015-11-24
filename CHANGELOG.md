@@ -1,6 +1,11 @@
 bix CHANGELOG
 =====
 
+####1.2.0
+* Remove .application() in favor of .renderOnResize()
+* Fix cleanStyle scope issue in .stylesheet()
+* Fix CSS units checker for stylesheet creation
+
 ####1.1.1
 
 * Bump version for README changes and addition of CHANGELOG
