@@ -1,6 +1,10 @@
 bix CHANGELOG
 =====
 
+####1.2.3
+* Fix issue with merge not respecting multiple entries with similar keys
+* Add disableButton function to automate styling of disabled buttons
+
 ####1.2.2
 * Fix issue with renderOnResize
 

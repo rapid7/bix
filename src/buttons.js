@@ -4,6 +4,10 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
+import {
+    default as getPrefixer
+} from "./prefixer";
+import utils from "./utils";
 import variables from "./variables";
 
 let buttons = {
@@ -42,6 +46,25 @@ let buttons = {
         cursor:"not-allowed",
         opacity:0.4
     }
+};
+
+buttons.disableButton = function(button) {
+    let prefix = getPrefixer();
+
+    return prefix(utils.merge(button, buttons.buttonDisabled, {
+        ":active":{
+            backgroundColor:button.backgroundColor,
+            color:button.color
+        },
+        ":focus":{
+            backgroundColor:button.backgroundColor,
+            color:button.color
+        },
+        ":hover":{
+            backgroundColor:button.backgroundColor,
+            color:button.color
+        }
+    }));
 };
 
 export default buttons;

@@ -1681,7 +1681,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    merge: function merge(target) {
 	        var _this = this;
 	
-	        var dest = {};
+	        var dest;
+	
+	        if (this.isArray(target)) {
+	            if (this.isArray(target)) {
+	                dest = [].concat(target);
+	            }
+	        } else {
+	            dest = {};
+	
+	            if (target && this.isObject(target) && !this.isFunction(target)) {
+	                this.forIn(target, function (value, key) {
+	                    dest[key] = value;
+	                });
+	            }
+	        }
 	
 	        for (var _len2 = arguments.length, sources = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
 	            sources[_key2 - 1] = arguments[_key2];
@@ -1689,13 +1703,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        this.forEach(sources, function (source) {
 	            if (_this.isArray(source)) {
-	                if (!_this.isArray(target)) {
-	                    console.error("Error: Trying to merge array with non-array.");
-	                    return dest;
-	                }
-	
-	                dest = [].concat(target || []);
-	
 	                _this.forEach(source, function (item, i) {
 	                    if (_this.isUndefined(dest[i])) {
 	                        dest[i] = item;
@@ -1708,14 +1715,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    }
 	                });
 	            } else {
-	                if (target && _this.isObject(target) && !_this.isFunction(target)) {
-	                    _this.forIn(target, function (value, key) {
-	                        dest[key] = value;
-	                    });
-	                }
-	
 	                _this.forIn(source, function (value, key) {
-	                    dest[key] = _this.isUndefined(target) || _this.isUndefined(target[key]) || !_this.isObject(value) && !_this.isUndefined(value) ? value : _this.merge(target[key], value || {});
+	                    if (!_this.isUndefined(value)) {
+	                        dest[key] = _this.isUndefined(target[key]) || !_this.isObject(value) ? value : _this.merge(target[key], value || {});
+	                    }
 	                });
 	            }
 	        });
