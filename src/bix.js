@@ -7,6 +7,7 @@
 import combine from "./combine";
 import extend from "./extend";
 import isReactComponent from "./isReactComponent";
+import normalize from "./normalize";
 import {
     getJsPrefix,
     getPrefixedProperties,
@@ -56,7 +57,7 @@ let bix = Object.create({
 
     normalize(...args) {
         if (!args.length || args[0] !== false) {
-            require("normalize.css");
+            this.stylesheet("normalize-css", normalize);
 
             this.stylesheet("bix-defaults", {
                 "*, *:after, *:before":{
