@@ -1853,7 +1853,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports["default"] = {
 	    "html": {
 	        fontFamily: "sans-serif",
-	        textSizeAdjust: "100%"
+	        msTextSizeAdjust: "100%",
+	        WebkitTextSizeAdjust: "100%"
 	    },
 	    "body": {
 	        margin: 0
