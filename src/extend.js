@@ -18,7 +18,7 @@ export default function(...styles) {
                 this[prop] = {};
             }
 
-            this[prop] = utils.isFunction(value) ? style : utils.merge(this[prop], prefix(value));
+            this[prop] = utils.isFunction(value) ? value : utils.merge(this[prop], prefix(value));
         });
     });
 

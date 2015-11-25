@@ -1796,7 +1796,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                _this[prop] = {};
 	            }
 	
-	            _this[prop] = _utils2["default"].isFunction(value) ? style : _utils2["default"].merge(_this[prop], prefix(value));
+	            _this[prop] = _utils2["default"].isFunction(value) ? value : _utils2["default"].merge(_this[prop], prefix(value));
 	        });
 	    });
 	
