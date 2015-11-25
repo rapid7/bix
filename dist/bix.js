@@ -186,7 +186,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            component.forceUpdate();
 	        } else {
 	            _utils2["default"].forIn(this.$$components, function (componentObj) {
-	                if (componentObj.renderOnResize) {
+	                if (componentObj.renderOnResize && _isReactComponent2["default"](componentObj.component)) {
 	                    componentObj.component.forceUpdate();
 	                }
 	            });
@@ -199,6 +199,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	            if (this.$$components[_name]) {
 	                this.$$components[_name].renderOnResize = true;
+	                this.$$components[_name].component = component;
 	            } else {
 	                this.$$components[_name] = {
 	                    component: component,
@@ -1826,7 +1827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _utils2 = _interopRequireDefault(_utils);
 	
 	exports["default"] = function (obj) {
-	  return _utils2["default"].isFunction(obj) && Object.getPrototypeOf(obj) === _react2["default"].Component;
+	  return _utils2["default"].isFunction(obj) && Object.getPrototypeOf(obj) === _react2["default"].Component || _utils2["default"].isObject(obj) && obj._reactInternalInstance;
 	};
 	
 	module.exports = exports["default"];

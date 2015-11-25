@@ -1,6 +1,9 @@
 bix CHANGELOG
 =====
 
+####1.2.2
+* Fix issue with renderOnResize
+
 ####1.2.1
 * Remove normalize.css webpack dependency, replace with object
 

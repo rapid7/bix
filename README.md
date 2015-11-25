@@ -284,7 +284,7 @@ componentWillMount() {
 }
 ```
 
-This prevents you from re-instantiating the same styles every time the component is mounted (which can be many times, for highly-reusable components). Before you ask, the reason this is not default behavior is so that you can override the styles at a later time from when you set them, if you so choose.
+This prevents you from re-instantiating the same styles every time the component is mounted (which can be many times, for highly-reusable components). Before you ask, the reason this is not default behavior is so that you can override the styles at a later time from when you set them, if you so choose. Keep in mind that if you are also using .renderOnResize() on the component, do not chain renderOnResize inside of this checker.
 
 Third, when creating stylesheets, try to place them outside of the component lifecycle, even if they are specific to a component. Internally bix will prevent you from adding multiple stylesheets with the same ID (it will simply merge them), however unless you want to merge styles with the existing stylesheet you only need it to run once:
 ```

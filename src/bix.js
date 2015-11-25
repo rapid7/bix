@@ -88,7 +88,7 @@ let bix = Object.create({
             component.forceUpdate();
         } else {
             utils.forIn(this.$$components, (componentObj) => {
-                if (componentObj.renderOnResize) {
+                if (componentObj.renderOnResize && isReactComponent(componentObj.component)) {
                     componentObj.component.forceUpdate();
                 }
             });
@@ -101,6 +101,7 @@ let bix = Object.create({
 
             if (this.$$components[name]) {
                 this.$$components[name].renderOnResize = true;
+                this.$$components[name].component = component;
             } else {
                 this.$$components[name] = {
                     component,

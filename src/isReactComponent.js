@@ -9,5 +9,6 @@ import React from "react";
 import utils from "./utils";
 
 export default function(obj) {
-    return utils.isFunction(obj) && Object.getPrototypeOf(obj) === React.Component;
+    return (utils.isFunction(obj) && Object.getPrototypeOf(obj) === React.Component) ||
+        (utils.isObject(obj) && obj._reactInternalInstance);
 }
