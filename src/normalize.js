@@ -7,7 +7,7 @@
 export default {
     "html":{
         fontFamily:"sans-serif",
-        msTextSizeAdjust:"100%",
+        MsTextSizeAdjust:"100%",
         WebkitTextSizeAdjust:"100%"
     },
     "body":{

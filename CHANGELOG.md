@@ -1,6 +1,9 @@
 bix CHANGELOG
 =====
 
+####1.2.1
+* Remove normalize.css webpack dependency, replace with object
+
 ####1.2.0
 * Remove .application() in favor of .renderOnResize()
 * Fix cleanStyle scope issue in .stylesheet()
