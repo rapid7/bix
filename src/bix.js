@@ -19,7 +19,8 @@ import unitlessValues from "./unitlessValues";
 import utils from "./utils";
 
 // functions to set properties in different ways
-const setProperty = {
+const noPxAdded = /(px|vh|vw|em|[%]|ex|cm|mm|in|pt|pc|ch|rem|vmin|vmax)/,
+    setProperty = {
     hidden(obj, prop, value) {
         Object.defineProperty(obj,prop,{
             configurable: false,
@@ -49,12 +50,6 @@ const setProperty = {
 };
 
 let bix = Object.create({
-    application(app) {
-        setProperty.readonly(this, "$$app", app);
-
-        return this;
-    },
-
     combine,
 
     extend,
@@ -88,15 +83,33 @@ let bix = Object.create({
     radium,
 
     render(component) {
-        if (!utils.isUndefined(this.$$app)) {
-            this.$$app.forceUpdate();
-        } else if (isReactComponent(component)) {
+        if (isReactComponent(component)) {
             component.forceUpdate();
         } else {
-            utils.forIn(this.$$components, (component) => {
-                component.forceUpdate();
+            utils.forIn(this.$$components, (componentObj) => {
+                if (componentObj.renderOnResize) {
+                    componentObj.component.forceUpdate();
+                }
             });
         }
+    },
+
+    renderOnResize(component) {
+        if (isReactComponent(component)) {
+            const name = component.displayName;
+
+            if (this.$$components[name]) {
+                this.$$components[name].renderOnResize = true;
+            } else {
+                this.$$components[name] = {
+                    component,
+                    renderOnResize:true,
+                    styles:{}
+                };
+            }
+        }
+
+        return this;
     },
 
     setUserAgent(userAgent) {
@@ -106,15 +119,6 @@ let bix = Object.create({
     },
 
     styles(component, ...styles) {
-        if (utils.isUndefined(this.$$app) && this.$$appWarn) {
-            console.warn("Warning: You haven't created a root component, which means each component will be managed independently. This is " +
-                "unavoidable if you are using a different library as your application base, however if you are using React + Flux then providing " +
-                "an application will increase performance of bix and is highly advised. You can do this by running bix.application(this) " +
-                "in the componentWillMount() for your root component.");
-
-            this.$$appWarn = false;
-        }
-
         if (utils.isUndefined(component)) {
             console.error("Error: no component has been specified.");
             return this;
@@ -203,13 +207,13 @@ let bix = Object.create({
 
         utils.forEach(styles, (block) => {
             if (utils.isObject(block)) {
-                let cleanStyle = {};
-
                 utils.forIn(block, (style, key) => {
+                    let cleanStyle = {};
+
                     str += key + "{";
 
                     utils.forIn(style, (value, prop) => {
-                        if (utils.isNumber(value) && unitlessValues.indexOf(prop) === -1 && !/px/.test(value)) {
+                        if (!noPxAdded.test(value) && utils.isNumber(value) && unitlessValues.indexOf(prop) === -1) {
                             value = value + "px";
                         }
 
@@ -240,8 +244,12 @@ let bix = Object.create({
     }
 });
 
-setProperty.hidden(bix, "$$app");
-setProperty.hidden(bix, "$$appWarn", true);
+function delayRenderOnResize() {
+    window.setTimeout(utils.bind(bix.render, bix), 1);
+}
+
+window.addEventListener("resize", delayRenderOnResize);
+
 setProperty.readonly(bix, "$$components", {});
 setProperty.readonly(bix, "$$stylesheets", {});
 

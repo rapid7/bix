@@ -416,13 +416,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    isNumber: function isNumber(obj) {
-	        obj = obj.toString().replace(/,/g, ".");
-	
-	        if (/[%]/.test(obj)) {
-	            return false;
-	        }
-	
-	        var numObj = parseFloat(obj);
+	        var numObj = parseFloat(obj.toString().replace(/,/g, "."));
 	
 	        return !this.isNaN(numObj) && toString.call(numObj) === "[object Number]";
 	    },

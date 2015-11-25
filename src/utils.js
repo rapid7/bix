@@ -81,13 +81,7 @@ export default {
     },
 
     isNumber(obj) {
-        obj = obj.toString().replace(/,/g, ".");
-
-        if (/[%]/.test(obj)) {
-            return false;
-        }
-
-        let numObj = parseFloat(obj);
+        let numObj = parseFloat(obj.toString().replace(/,/g, "."));
 
         return !this.isNaN(numObj) && toString.call(numObj) === "[object Number]";
     },
