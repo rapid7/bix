@@ -49,5 +49,5 @@
     "dist": "npm run compile && npm run build &&  npm run build-minified",
     "prepublish": "npm run compile"
   },
-  "version": "1.2.4"
+  "version": "1.2.5"
 }

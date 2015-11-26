@@ -1,6 +1,14 @@
 bix CHANGELOG
 =====
 
+####1.2.4
+* Add universal setDisabled / setReadonly functions to style any element as disabled / readonly
+* remove button-specific disabled / form-specific readonly styles
+* Make dropdownContainer inline-block to ensure right alignment works
+* Add inline versions of all form elements
+* Remove containerFull (default return of container(), not needed)
+* Touch up a number of default styles
+
 ####1.2.3
 * Fix issue with merge not respecting multiple entries with similar keys
 * Add disableButton function to automate styling of disabled buttons

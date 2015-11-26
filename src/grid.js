@@ -58,14 +58,6 @@ grid.container = function(width) {
     });
 };
 
-grid.containerFull = utils.merge(grid.containerFixed, {
-    width:"100%"
-});
-
-grid.rowFlex = utils.merge(grid.containerFlex, {
-    flexWrap:"nowrap"
-});
-
 grid.column_1_12 = grid.column("1/12");
 grid.column_1_10 = grid.column("1/10");
 grid.column_1_8 = grid.column("1/8");

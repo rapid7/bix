@@ -9,7 +9,9 @@ import utils from "./utils";
 
 var dropdowns = {
     dropdownContainer:{
-        position:"relative"
+        display:"inline-block",
+        position:"relative",
+        verticalAlign:"baseline"
     },
     dropdown:{
         backgroundColor:variables.white,
@@ -26,9 +28,13 @@ var dropdowns = {
         zIndex:1000
     },
     dropdownItem:{
+        backgroundColor:"inherit",
+        cursor:"pointer",
         display:"block",
         margin:0,
         padding:"0.5em 1em",
+        transition:"background-color " + variables.transitionTiming + " " + variables.transitionEase + ", color " +
+            variables.transitionTiming + " " + variables.transitionEase,
         whiteSpace:"nowrap",
         ":hover":{
             backgroundColor:"#eee"
