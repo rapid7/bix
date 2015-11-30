@@ -199,6 +199,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        return readonlyElement;
 	    },
+	    setStatic: function setStatic(element) {
+	        var _this = this;
+	
+	        if (_utils2["default"].isObject(element)) {
+	            if (element[":active"]) {
+	                delete element[":active"];
+	            }
+	
+	            if (element[":focus"]) {
+	                delete element[":focus"];
+	            }
+	
+	            if (element[":hover"]) {
+	                delete element[":hover"];
+	            }
+	
+	            _utils2["default"].forIn(element, function (value, key) {
+	                if (/@media/.test(key)) {
+	                    delete element[key];
+	                } else if (_utils2["default"].isObject(value)) {
+	                    element[key] = _this.setStatic(element[key]);
+	                }
+	            });
+	        }
+	
+	        return element;
+	    },
 	    wrapAll: {
 	        backgroundColor: _variables2["default"].backgroundColor,
 	        color: _variables2["default"].fontColor,

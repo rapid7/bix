@@ -71,6 +71,31 @@ export default {
 
         return readonlyElement;
     },
+    setStatic(element) {
+        if (utils.isObject(element)) {
+            if (element[":active"]) {
+                delete element[":active"];
+            }
+
+            if (element[":focus"]) {
+                delete element[":focus"];
+            }
+
+            if (element[":hover"]) {
+                delete element[":hover"];
+            }
+
+            utils.forIn(element, (value, key) => {
+                if (/@media/.test(key)) {
+                    delete element[key];
+                } else if (utils.isObject(value)) {
+                    element[key] = this.setStatic(element[key]);
+                }
+            });
+        }
+
+        return element;
+    },
     wrapAll:{
         backgroundColor:variables.backgroundColor,
         color:variables.fontColor,
