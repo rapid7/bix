@@ -39,6 +39,7 @@ export default {
             textDecoration:"underline"
         }
     },
+
     hr:{
         borderColor:"#eee",
         borderStyle:"solid none",
@@ -46,56 +47,25 @@ export default {
         marginBottom:10,
         marginTop:10
     },
+
     p:{
         margin:"1em 0"
     },
+
     setDisabled(element) {
         const prefix = getPrefixer();
 
-        let disabledElement = prefix(utils.merge(element, disabled));
-
-        delete disabledElement[":active"];
-        delete disabledElement[":focus"];
-        delete disabledElement[":hover"];
-
-        return disabledElement;
+        return utils.setStatic(prefix(utils.merge(element, disabled)));
     },
+
     setReadonly(element) {
         const prefix = getPrefixer();
 
-        let readonlyElement = prefix(utils.merge(element, readonly));
-
-        delete readonlyElement[":active"];
-        delete readonlyElement[":focus"];
-        delete readonlyElement[":hover"];
-
-        return readonlyElement;
+        return utils.setStatic(prefix(utils.merge(element, readonly)));
     },
-    setStatic(element) {
-        if (utils.isObject(element)) {
-            if (element[":active"]) {
-                delete element[":active"];
-            }
 
-            if (element[":focus"]) {
-                delete element[":focus"];
-            }
+    setStatic:utils.setStatic,
 
-            if (element[":hover"]) {
-                delete element[":hover"];
-            }
-
-            utils.forIn(element, (value, key) => {
-                if (/@media/.test(key)) {
-                    delete element[key];
-                } else if (utils.isObject(value)) {
-                    element[key] = this.setStatic(element[key]);
-                }
-            });
-        }
-
-        return element;
-    },
     wrapAll:{
         backgroundColor:variables.backgroundColor,
         color:variables.fontColor,

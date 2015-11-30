@@ -167,6 +167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            textDecoration: "underline"
 	        }
 	    },
+	
 	    hr: {
 	        borderColor: "#eee",
 	        borderStyle: "solid none",
@@ -174,58 +175,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        marginBottom: 10,
 	        marginTop: 10
 	    },
+	
 	    p: {
 	        margin: "1em 0"
 	    },
+	
 	    setDisabled: function setDisabled(element) {
 	        var prefix = _prefixer2["default"]();
 	
-	        var disabledElement = prefix(_utils2["default"].merge(element, disabled));
-	
-	        delete disabledElement[":active"];
-	        delete disabledElement[":focus"];
-	        delete disabledElement[":hover"];
-	
-	        return disabledElement;
+	        return _utils2["default"].setStatic(prefix(_utils2["default"].merge(element, disabled)));
 	    },
+	
 	    setReadonly: function setReadonly(element) {
 	        var prefix = _prefixer2["default"]();
 	
-	        var readonlyElement = prefix(_utils2["default"].merge(element, readonly));
-	
-	        delete readonlyElement[":active"];
-	        delete readonlyElement[":focus"];
-	        delete readonlyElement[":hover"];
-	
-	        return readonlyElement;
+	        return _utils2["default"].setStatic(prefix(_utils2["default"].merge(element, readonly)));
 	    },
-	    setStatic: function setStatic(element) {
-	        var _this = this;
 	
-	        if (_utils2["default"].isObject(element)) {
-	            if (element[":active"]) {
-	                delete element[":active"];
-	            }
+	    setStatic: _utils2["default"].setStatic,
 	
-	            if (element[":focus"]) {
-	                delete element[":focus"];
-	            }
-	
-	            if (element[":hover"]) {
-	                delete element[":hover"];
-	            }
-	
-	            _utils2["default"].forIn(element, function (value, key) {
-	                if (/@media/.test(key)) {
-	                    delete element[key];
-	                } else if (_utils2["default"].isObject(value)) {
-	                    element[key] = _this.setStatic(element[key]);
-	                }
-	            });
-	        }
-	
-	        return element;
-	    },
 	    wrapAll: {
 	        backgroundColor: _variables2["default"].backgroundColor,
 	        color: _variables2["default"].fontColor,
@@ -1557,6 +1525,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	    })(function (value, radix) {
 	        return parseInt(value, radix || 10);
 	    }),
+	
+	    setStatic: function setStatic(element) {
+	        var _this2 = this;
+	
+	        if (this.isObject(element)) {
+	            if (element[":active"]) {
+	                delete element[":active"];
+	            }
+	
+	            if (element[":focus"]) {
+	                delete element[":focus"];
+	            }
+	
+	            if (element[":hover"]) {
+	                delete element[":hover"];
+	            }
+	
+	            this.forIn(element, function (value, key) {
+	                if (/@media/.test(key)) {
+	                    delete element[key];
+	                } else if (_this2.isObject(value)) {
+	                    element[key] = _this2.setStatic(element[key]);
+	                }
+	            });
+	        }
+	
+	        return element;
+	    },
 	
 	    unique: function unique(arr) {
 	        var seen = {},
