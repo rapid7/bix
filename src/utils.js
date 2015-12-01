@@ -153,32 +153,6 @@ export default {
         return parseInt(value, radix || 10);
     },
 
-    setStatic(element) {
-        if (this.isObject(element)) {
-            if (element[":active"]) {
-                delete element[":active"];
-            }
-
-            if (element[":focus"]) {
-                delete element[":focus"];
-            }
-
-            if (element[":hover"]) {
-                delete element[":hover"];
-            }
-
-            this.forIn(element, (value, key) => {
-                if (/@media/.test(key)) {
-                    delete element[key];
-                } else if (this.isObject(value)) {
-                    element[key] = this.setStatic(element[key]);
-                }
-            });
-        }
-
-        return element;
-    },
-
     unique(arr) {
         let seen = {},
             out = [],

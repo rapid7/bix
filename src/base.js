@@ -21,6 +21,32 @@ var readonly = {
     cursor:"default"
 };
 
+function setStatic(element) {
+    if (utils.isObject(element)) {
+        if (element[":active"]) {
+            delete element[":active"];
+        }
+
+        if (element[":focus"]) {
+            delete element[":focus"];
+        }
+
+        if (element[":hover"]) {
+            delete element[":hover"];
+        }
+
+        utils.forIn(element, (value, key) => {
+            if (/@media/.test(key)) {
+                delete element[key];
+            } else if (utils.isObject(value)) {
+                element[key] = setStatic(element[key]);
+            }
+        });
+    }
+
+    return element;
+}
+
 export default {
     a:{
         color:"#337ab7",
@@ -55,16 +81,16 @@ export default {
     setDisabled(element) {
         const prefix = getPrefixer();
 
-        return utils.setStatic(prefix(utils.merge(element, disabled)));
+        return setStatic(prefix(utils.merge(element, disabled)));
     },
 
     setReadonly(element) {
         const prefix = getPrefixer();
 
-        return utils.setStatic(prefix(utils.merge(element, readonly)));
+        return setStatic(prefix(utils.merge(element, readonly)));
     },
 
-    setStatic:utils.setStatic,
+    setStatic,
 
     wrapAll:{
         backgroundColor:variables.backgroundColor,

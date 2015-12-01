@@ -1740,34 +1740,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return parseInt(value, radix || 10);
 	    }),
 	
-	    setStatic: function setStatic(element) {
-	        var _this2 = this;
-	
-	        if (this.isObject(element)) {
-	            if (element[":active"]) {
-	                delete element[":active"];
-	            }
-	
-	            if (element[":focus"]) {
-	                delete element[":focus"];
-	            }
-	
-	            if (element[":hover"]) {
-	                delete element[":hover"];
-	            }
-	
-	            this.forIn(element, function (value, key) {
-	                if (/@media/.test(key)) {
-	                    delete element[key];
-	                } else if (_this2.isObject(value)) {
-	                    element[key] = _this2.setStatic(element[key]);
-	                }
-	            });
-	        }
-	
-	        return element;
-	    },
-	
 	    unique: function unique(arr) {
 	        var seen = {},
 	            out = [],
