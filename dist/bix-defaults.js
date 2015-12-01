@@ -141,9 +141,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	var disabled = {
 	    cursor: "not-allowed",
 	    opacity: 0.4
-	};
-	
-	var readonly = {
+	},
+	    readonly = {
 	    backgroundColor: "#eee",
 	    color: "#aaa",
 	    cursor: "default"

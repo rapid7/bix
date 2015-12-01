@@ -10,16 +10,15 @@ import {
 import utils from "./utils";
 import variables from "./variables";
 
-var disabled = {
-    cursor: "not-allowed",
-    opacity: 0.4
-};
-
-var readonly = {
-    backgroundColor: "#eee",
-    color: "#aaa",
-    cursor:"default"
-};
+const disabled = {
+        cursor: "not-allowed",
+        opacity: 0.4
+    },
+    readonly = {
+        backgroundColor: "#eee",
+        color: "#aaa",
+        cursor:"default"
+    };
 
 function setStatic(element) {
     if (utils.isObject(element)) {
