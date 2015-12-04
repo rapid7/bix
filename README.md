@@ -207,18 +207,18 @@ Notice that the generated guid is stored, not applied inline ... this is because
 
 ```
 @bix.radium
-class CustomButton extends React.Component {
+class CustomButtonGroup extends React.Component {
     static buttonGuid = bix.guid;
     
     render() {
         return <div>
-            {this.props.buttons.map((button, index) => {
-                <button
-                    key={CustomButton.buttonGuid + "_" + index}
+            {this.props.buttons.map((Button, index) => {
+                <Button
+                    key={CustomButtonGroup.buttonGuid + "_" + index}
                     style={bix.button}
                     type="button">
                     I have a unique key!
-                </button>
+                </Button>
             })}
         </div>;
     }
