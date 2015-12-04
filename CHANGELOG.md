@@ -1,6 +1,12 @@
 bix CHANGELOG
 =====
 
+#### 1.2.7
+* Add unique GUID generator *bix.guid* as convenience for Radium's requirement of unique key / ref
+
+#### 1.2.6
+* Add setStatic method, which will remove all dynamic styling (:active, :focus, :hover, @media) from the object passed
+
 ####1.2.4
 * Add universal setDisabled / setReadonly functions to style any element as disabled / readonly
 * remove button-specific disabled / form-specific readonly styles
