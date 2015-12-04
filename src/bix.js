@@ -278,7 +278,7 @@ function delayRenderOnResize() {
 window.addEventListener("resize", delayRenderOnResize);
 
 setProperty.readonlyHidden(bix, "$$components", {});
-setProperty.hidden(bix, "$$guids", []);
+setProperty.readonlyHidden(bix, "$$guids", []);
 setProperty.readonlyHidden(bix, "$$stylesheets", {});
 
 export default bix;
