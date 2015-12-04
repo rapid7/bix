@@ -185,6 +185,48 @@ class CustomButton extends React.Component {
 
 The decorator used here operates exactly like the Radium decorator, in that it will automatically apply all dynamic styles you set for it and any of the nested sub-components.
 
+One other thing to keep in mind is that any element where you have dynamic styles applied should have either a unique *key* or *ref* attribute value. This is a requirement of Radium, and to aid in this process bix has a guid creator:
+
+```
+@bix.radium
+class CustomButton extends React.Component {
+    static buttonGuid = bix.guid;
+    
+    render() {
+        return <button
+            key={CustomButton.buttonGuid}
+            style={bix.button}
+            type="button">
+            I have a unique key!
+        </button>;
+    }
+}
+```
+
+Notice that the generated guid is stored, not applied inline ... this is because calling *bix.guid* always returns a unique value, and the key must remain consistent for Radium to make use of it. If you need a deeper level of granularity (like in a map loop, for example), you can build from there:
+
+```
+@bix.radium
+class CustomButtonGroup extends React.Component {
+    static buttonGuid = bix.guid;
+    
+    render() {
+        return <div>
+            {this.props.buttons.map((Button, index) => {
+                <Button
+                    key={CustomButtonGroup.buttonGuid + "_" + index}
+                    style={bix.button}
+                    type="button">
+                    I have a unique key!
+                </Button>
+            })}
+        </div>;
+    }
+}
+```
+
+This is just an example, feel free to use whatever convention you like.
+
 ### Creating stylesheets
 
 Just in case you want to create a stylesheet (like if you wanted to have styling on html, for example), you can use the *stylesheet* method to build it. You can build it with the same objects you would build your normal styles with, and give the selectors as the key:
