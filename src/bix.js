@@ -7,6 +7,7 @@
 import combine from "./combine";
 import extend from "./extend";
 import isReactComponent from "./isReactComponent";
+import guid from "./guid";
 import normalize from "./normalize";
 import {
     getJsPrefix,
@@ -22,33 +23,42 @@ import utils from "./utils";
 // functions to set properties in different ways
 const noPxAdded = /(px|vh|vw|em|[%]|ex|cm|mm|in|pt|pc|ch|rem|vmin|vmax)/,
     setProperty = {
-    hidden(obj, prop, value) {
-        Object.defineProperty(obj,prop,{
-            configurable: false,
-            enumerable: false,
-            value: value,
-            writable: true
-        });
-    },
+        hidden(obj, prop, value) {
+            Object.defineProperty(obj, prop, {
+                configurable: false,
+                enumerable: false,
+                value: value,
+                writable: true
+            });
+        },
 
-    permanent(obj, prop, value) {
-        Object.defineProperty(obj,prop,{
-            configurable: false,
-            enumerable: true,
-            value: value,
-            writable: true
-        });
-    },
+        permanent(obj, prop, value) {
+            Object.defineProperty(obj, prop, {
+                configurable: false,
+                enumerable: true,
+                value: value,
+                writable: true
+            });
+        },
 
-    readonly(obj, prop, value) {
-        Object.defineProperty(obj,prop,{
-            configurable: false,
-            enumerable: false,
-            value: value,
-            writable: false
-        });
-    }
-};
+        readonly(obj, prop, value) {
+            Object.defineProperty(obj, prop, {
+                configurable: false,
+                enumerable: true,
+                value: value,
+                writable: false
+            });
+        },
+
+        readonlyHidden(obj, prop, value) {
+            Object.defineProperty(obj, prop, {
+                configurable: false,
+                enumerable: false,
+                value: value,
+                writable: false
+            });
+        }
+    };
 
 let bix = Object.create({
     combine,
@@ -246,13 +256,27 @@ let bix = Object.create({
     }
 });
 
+Object.defineProperty(Object.getPrototypeOf(bix), "guid", {
+    get() {
+        const newGuid = guid();
+
+        if (bix.$$guids.indexOf(newGuid) === -1) {
+            bix.$$guids.push(newGuid);
+            return newGuid;
+        }
+
+        return bix.guid;
+    }
+});
+
 function delayRenderOnResize() {
     window.setTimeout(utils.bind(bix.render, bix), 1);
 }
 
 window.addEventListener("resize", delayRenderOnResize);
 
-setProperty.readonly(bix, "$$components", {});
-setProperty.readonly(bix, "$$stylesheets", {});
+setProperty.readonlyHidden(bix, "$$components", {});
+setProperty.hidden(bix, "$$guids", []);
+setProperty.readonlyHidden(bix, "$$stylesheets", {});
 
 export default bix;
