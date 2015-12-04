@@ -41,15 +41,6 @@ const noPxAdded = /(px|vh|vw|em|[%]|ex|cm|mm|in|pt|pc|ch|rem|vmin|vmax)/,
             });
         },
 
-        readonly(obj, prop, value) {
-            Object.defineProperty(obj, prop, {
-                configurable: false,
-                enumerable: true,
-                value: value,
-                writable: false
-            });
-        },
-
         readonlyHidden(obj, prop, value) {
             Object.defineProperty(obj, prop, {
                 configurable: false,
