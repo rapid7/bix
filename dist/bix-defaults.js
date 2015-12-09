@@ -276,8 +276,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return prefixedProperties;
 	}
 	
-	properties = populatePrefixedProperties();
-	
 	function getCssPrefix() {
 	    return prefixer.cssPrefix;
 	}

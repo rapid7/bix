@@ -511,8 +511,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return prefixedProperties;
 	}
 	
-	properties = populatePrefixedProperties();
-	
 	function getCssPrefix() {
 	    return prefixer.cssPrefix;
 	}
@@ -1926,13 +1924,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @todo import crypto and use getRandomBytes
 	 */
-	var getRandomValues = _utils2["default"].hasWindow() ? (window.crypto || window.msCrypto).getRandomValues : undefined;
+	var cryptoObj = _utils2["default"].hasWindow() ? window.crypto || window.msCrypto : undefined;
 	var performance = _utils2["default"].hasWindow() ? window.performance : undefined;
 	
 	function guid() {
-	    if (getRandomValues && Uint8Array) {
+	    if (cryptoObj && Uint8Array) {
 	        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-	            var r = getRandomValues(new Uint8Array(1))[0] % 16 | 0,
+	            var r = cryptoObj.getRandomValues(new Uint8Array(1))[0] % 16 | 0,
 	                v = c === "x" ? r : r & 0x3 | 0x8;
 	
 	            return v.toString(16);
@@ -1942,7 +1940,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var d = new Date().getTime();
 	
 	    if (performance && _utils2["default"].isFunction(performance.now)) {
-	        d += window.performance.now();
+	        d += performance.now();
 	    }
 	
 	    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {

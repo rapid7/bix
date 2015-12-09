@@ -23,8 +23,6 @@ function populatePrefixedProperties() {
     return prefixedProperties;
 }
 
-properties = populatePrefixedProperties();
-
 export function getCssPrefix() {
     return prefixer.cssPrefix;
 }

@@ -10,13 +10,13 @@ import utils from "./utils";
  *
  * @todo import crypto and use getRandomBytes
  */
-const getRandomValues = utils.hasWindow() ? (window.crypto || window.msCrypto).getRandomValues : undefined;
+const cryptoObj = utils.hasWindow() ? (window.crypto || window.msCrypto) : undefined;
 const performance = utils.hasWindow() ? window.performance : undefined;
 
 export default function guid() {
-    if (getRandomValues && Uint8Array) {
+    if (cryptoObj && Uint8Array) {
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-            const r = getRandomValues(new Uint8Array(1))[0] % 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8);
+            const r = cryptoObj.getRandomValues(new Uint8Array(1))[0] % 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8);
 
             return v.toString(16);
         });
@@ -25,7 +25,7 @@ export default function guid() {
     let d = new Date().getTime();
 
     if (performance && utils.isFunction(performance.now)) {
-        d += window.performance.now();
+        d += performance.now();
     }
 
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
