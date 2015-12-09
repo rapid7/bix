@@ -5,8 +5,11 @@ bix CHANGELOG
 * Modify prefixer setup and window / document functions to be in checkers, for universal apps
 * Update var syntax to be fully ES2015
 
-####1.2.7
-* Add bix.guid getter for easy unique identifier retrieval for assignment
+#### 1.2.7
+* Add unique GUID generator *bix.guid* as convenience for Radium's requirement of unique key / ref
+
+#### 1.2.6
+* Add setStatic method, which will remove all dynamic styling (:active, :focus, :hover, @media) from the object passed
 
 ####1.2.4
 * Add universal setDisabled / setReadonly functions to style any element as disabled / readonly
