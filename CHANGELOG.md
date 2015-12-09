@@ -1,6 +1,13 @@
 bix CHANGELOG
 =====
 
+####1.2.8
+* Modify prefixer setup and window / document functions to be in checkers, for universal apps
+* Update var syntax to be fully ES2015
+
+####1.2.7
+* Add bix.guid getter for easy unique identifier retrieval for assignment
+
 ####1.2.4
 * Add universal setDisabled / setReadonly functions to style any element as disabled / readonly
 * remove button-specific disabled / form-specific readonly styles

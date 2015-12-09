@@ -6,12 +6,17 @@
 
 import utils from "./utils";
 
-const cryptoObj = window.crypto || window.msCrypto;
+/**
+ *
+ * @todo import crypto and use getRandomBytes
+ */
+const getRandomValues = utils.hasWindow() ? (window.crypto || window.msCrypto).getRandomValues : undefined;
+const performance = utils.hasWindow() ? window.performance : undefined;
 
 export default function guid() {
-    if (cryptoObj && window.Uint8Array) {
+    if (getRandomValues && Uint8Array) {
         return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-            let r = cryptoObj.getRandomValues(new Uint8Array(1))[0] % 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8);
+            const r = getRandomValues(new Uint8Array(1))[0] % 16 | 0, v = c === "x" ? r : (r & 0x3 | 0x8);
 
             return v.toString(16);
         });
@@ -19,12 +24,12 @@ export default function guid() {
 
     let d = new Date().getTime();
 
-    if (window.performance && utils.isFunction(window.performance.now)) {
+    if (performance && utils.isFunction(performance.now)) {
         d += window.performance.now();
     }
 
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-        let r = (d + Math.random() * 16) % 16 | 0;
+        const r = (d + Math.random() * 16) % 16 | 0;
 
         d = Math.floor(d / 16);
 

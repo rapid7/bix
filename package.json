@@ -4,6 +4,7 @@
     "url": "https://github.com/rapid7/bix/issues"
   },
   "dependencies": {
+    "crypto": "0.0.3",
     "inline-style-prefixer": "0.5.1",
     "radium": "^0.15.3",
     "react": "^0.14.2"
@@ -49,5 +50,5 @@
     "dist": "npm run compile && npm run build &&  npm run build-minified",
     "prepublish": "npm run compile"
   },
-  "version": "1.2.7"
+  "version": "1.2.8"
 }

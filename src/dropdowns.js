@@ -7,7 +7,7 @@
 import variables from "./variables";
 import utils from "./utils";
 
-var dropdowns = {
+let dropdowns = {
     dropdownContainer:{
         display:"inline-block",
         position:"relative",

@@ -72,8 +72,9 @@ let bixPrototype = {
         },
 
         prefix(...styles) {
-            let prefix = getPrefixer(),
-                prefixedStyles = {};
+            const prefix = getPrefixer();
+
+            let prefixedStyles = {};
 
             utils.forEach(styles, (style) => {
                 prefixedStyles = utils.merge(prefixedStyles, prefix(style));
@@ -137,7 +138,7 @@ let bixPrototype = {
                     return this;
                 }
 
-                let name = component.displayName;
+                const name = component.displayName;
 
                 if (utils.isUndefined(name)) {
                     console.error("Error: you need to specify a displayName property on your React class if you want to assign styles to bix.");
@@ -167,83 +168,85 @@ let bixPrototype = {
         },
 
         stylesheet(id, ...styles) {
-            let prefixedProperties = getPrefixedProperties(),
-                jsPrefix = getJsPrefix();
+            if (utils.hasDocument()) {
+                const prefixedProperties = getPrefixedProperties();
+                const jsPrefix = getJsPrefix();
 
-            if (!utils.isString(id) && utils.isObject(id)) {
-                if (id.displayName) {
-                    id = id.displayName;
+                if (!utils.isString(id) && utils.isObject(id)) {
+                    if (id.displayName) {
+                        id = id.displayName;
+                    } else {
+                        console.error("Error: the object you passed needs to have a displayName property to create a stylesheet.");
+                        return this;
+                    }
                 } else {
-                    console.error("Error: the object you passed needs to have a displayName property to create a stylesheet.");
-                    return this;
+                    if (utils.isUndefined(id)) {
+                        console.error("Error: generated stylesheets need to be given an id.");
+                        return this;
+                    } else if (!utils.isString(id)) {
+                        console.error("Error: first parameter needs to be either a string or a React class.");
+                        return this;
+                    }
                 }
-            } else {
-                if (utils.isUndefined(id)) {
-                    console.error("Error: generated stylesheets need to be given an id.");
-                    return this;
-                } else if (!utils.isString(id)) {
-                    console.error("Error: first parameter needs to be either a string or a React class.");
-                    return this;
+
+                let currentStyles = {},
+                    styleTag = document.createElement("style"),
+                    str = "";
+
+                if (utils.isObject(id)) {
+                    id = id.displayName;
+
+                    if (utils.isUndefined(id)) {
+                        console.error("Error: first parameter needs to be either a string or a React class.");
+                        return this;
+                    }
                 }
-            }
 
-            let currentStyles = {},
-                styleTag = document.createElement("style"),
-                str = "";
-
-            if (utils.isObject(id)) {
-                id = id.displayName;
-
-                if (utils.isUndefined(id)) {
-                    console.error("Error: first parameter needs to be either a string or a React class.");
-                    return this;
+                if (!utils.isUndefined(this.$$stylesheets[id])) {
+                    styleTag = document.getElementById(id);
+                    currentStyles = this.$$stylesheets[id];
                 }
-            }
 
-            if (!utils.isUndefined(this.$$stylesheets[id])) {
-                styleTag = document.getElementById(id);
-                currentStyles = this.$$stylesheets[id];
-            }
+                styleTag.type = "text/css";
+                styleTag.id = id;
 
-            styleTag.type = "text/css";
-            styleTag.id = id;
+                utils.forEach(styles, (block) => {
+                    if (utils.isObject(block)) {
+                        utils.forIn(block, (style, key) => {
+                            let cleanStyle = {};
 
-            utils.forEach(styles, (block) => {
-                if (utils.isObject(block)) {
-                    utils.forIn(block, (style, key) => {
-                        let cleanStyle = {};
+                            str += key + "{";
 
-                        str += key + "{";
+                            utils.forIn(style, (value, prop) => {
+                                if (!noPxAdded.test(value) && utils.isNumber(value) && unitlessValues.indexOf(prop) === -1) {
+                                    value = value + "px";
+                                }
 
-                        utils.forIn(style, (value, prop) => {
-                            if (!noPxAdded.test(value) && utils.isNumber(value) && unitlessValues.indexOf(prop) === -1) {
-                                value = value + "px";
-                            }
+                                if (prefixedProperties.indexOf(prop) !== -1) {
+                                    prop = jsPrefix + prop.charAt(0).toUpperCase() + prop.slice(1);
+                                }
 
-                            if (prefixedProperties.indexOf(prop) !== -1) {
-                                prop = jsPrefix + prop.charAt(0).toUpperCase() + prop.slice(1);
-                            }
+                                cleanStyle[prop] = value;
+                            });
 
-                            cleanStyle[prop] = value;
+                            utils.forIn(cleanStyle, (value, prop) => {
+                                str += utils.kebabCase(prop) + ":" + value + ";";
+                            });
+
+                            str += "}";
                         });
 
-                        utils.forIn(cleanStyle, (value, prop) => {
-                            str += utils.kebabCase(prop) + ":" + value + ";";
-                        });
+                        currentStyles = combine(currentStyles, block);
+                    }
+                });
 
-                        str += "}";
-                    });
+                this.$$stylesheets[id] = currentStyles;
+                styleTag.textContent = sqwish(str);
 
-                    currentStyles = combine(currentStyles, block);
-                }
-            });
+                document.head.appendChild(styleTag);
 
-            this.$$stylesheets[id] = currentStyles;
-            styleTag.textContent = sqwish(str);
-
-            document.head.appendChild(styleTag);
-
-            return this;
+                return this;
+            }
         }
     };
 
@@ -263,10 +266,14 @@ Object.defineProperty(bixPrototype, "guid", {
 let bix = Object.create(bixPrototype);
 
 function delayRenderOnResize() {
-    window.setTimeout(utils.bind(bix.render, bix), 1);
+    if (utils.hasWindow()) {
+        window.setTimeout(utils.bind(bix.render, bix), 1);
+    }
 }
 
-window.addEventListener("resize", delayRenderOnResize);
+if (utils.hasWindow()) {
+    window.addEventListener("resize", delayRenderOnResize);
+}
 
 setProperty.readonlyHidden(bix, "$$components", {});
 setProperty.readonlyHidden(bix, "$$guids", []);

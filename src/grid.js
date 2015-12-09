@@ -6,7 +6,7 @@
 
 import utils from "./utils";
 
-var grid = {
+let grid = {
     column:function(width) {
         var numDenom;
 

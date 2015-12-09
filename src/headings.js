@@ -7,7 +7,7 @@
 import variables from "./variables";
 import utils from "./utils";
 
-var headings = {
+let headings = {
     h6:{
         display:"block",
         fontSize:variables.fontSize,

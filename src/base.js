@@ -10,15 +10,16 @@ import {
 import utils from "./utils";
 import variables from "./variables";
 
-const disabled = {
-        cursor: "not-allowed",
-        opacity: 0.4
-    },
-    readonly = {
-        backgroundColor: "#eee",
-        color: "#aaa",
-        cursor:"default"
-    };
+const DISABLED = {
+    cursor: "not-allowed",
+    opacity: 0.4
+};
+
+const READONLY = {
+    backgroundColor: "#eee",
+    color: "#aaa",
+    cursor:"default"
+};
 
 function setStatic(element) {
     if (utils.isObject(element)) {
@@ -80,13 +81,13 @@ export default {
     setDisabled(element) {
         const prefix = getPrefixer();
 
-        return setStatic(prefix(utils.merge(element, disabled)));
+        return setStatic(prefix(utils.merge(element, DISABLED)));
     },
 
     setReadonly(element) {
         const prefix = getPrefixer();
 
-        return setStatic(prefix(utils.merge(element, readonly)));
+        return setStatic(prefix(utils.merge(element, READONLY)));
     },
 
     setStatic,

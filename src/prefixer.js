@@ -8,8 +8,8 @@ import Prefixer from "inline-style-prefixer";
 
 import utils from "./utils";
 
-let prefixer = new Prefixer(),
-    properties = [];
+let properties = [],
+    prefixer;
 
 function populatePrefixedProperties() {
     let prefixedProperties = [];
@@ -43,5 +43,9 @@ export function setPrefixerByUserAgent(userAgent) {
 }
 
 export default function getPrefixer() {
+    if (!prefixer) {
+        setPrefixerByUserAgent();
+    }
+
     return utils.bind(prefixer.prefix, this);
 };

@@ -18,8 +18,9 @@ function strict_css(css) {
     // into combined rules
 
     // store global dict of all rules
-    let ruleList = {},
-        rules = css.match(/([^{]+\{[^}]+\})+?/g);
+    const rules = css.match(/([^{]+\{[^}]+\})+?/g);
+
+    let ruleList = {};
 
     // lets find the dups
     utils.forEach(rules, (rule) => {
@@ -57,7 +58,7 @@ function strict_css(css) {
     css = "";
 
     utils.forIn(ruleList, (value,selector) => {
-        let joinedRuleList = value.join(";");
+        const joinedRuleList = value.join(";");
 
         css += selector + "{" + (joinedRuleList).replace(/;$/, "") + "}";
     });
@@ -67,7 +68,7 @@ function strict_css(css) {
 
 function sqwish(css, strict) {
     // allow /*! bla */ style comments to retain copyrights etc.
-    var comments = css.match(/\/\*![\s\S]+?\*\//g);
+    let comments = css.match(/\/\*![\s\S]+?\*\//g);
 
     css = css.trim() // give it a solid trimming to start
 

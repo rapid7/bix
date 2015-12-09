@@ -70,7 +70,6 @@
     "no-proto":2,
     "no-this-before-super":2,
     "no-undef":2,
-    "no-undefined":1,
     "no-unexpected-multiline":1,
     "no-unreachable":2,
     "no-use-before-define":2,

@@ -10,7 +10,7 @@ import {
 import utils from "./utils";
 
 export default function(...styles) {
-    let prefix = getPrefixer();
+    const prefix = getPrefixer();
 
     utils.forEach(styles, (style) => {
         utils.forIn(style, (value, prop) => {

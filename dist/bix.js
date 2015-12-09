@@ -169,8 +169,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    prefix: function prefix() {
-	        var prefix = _prefixer2["default"](),
-	            prefixedStyles = {};
+	        var prefix = _prefixer2["default"]();
+	
+	        var prefixedStyles = {};
 	
 	        for (var _len2 = arguments.length, styles = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
 	            styles[_key2] = arguments[_key2];
@@ -287,87 +288,108 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 	
 	    stylesheet: function stylesheet(id) {
-	        var prefixedProperties = _prefixer.getPrefixedProperties(),
-	            jsPrefix = _prefixer.getJsPrefix();
+	        var _this2 = this,
+	            _arguments2 = arguments;
 	
-	        if (!_utils2["default"].isString(id) && _utils2["default"].isObject(id)) {
-	            if (id.displayName) {
-	                id = id.displayName;
-	            } else {
-	                console.error("Error: the object you passed needs to have a displayName property to create a stylesheet.");
-	                return this;
-	            }
-	        } else {
-	            if (_utils2["default"].isUndefined(id)) {
-	                console.error("Error: generated stylesheets need to be given an id.");
-	                return this;
-	            } else if (!_utils2["default"].isString(id)) {
-	                console.error("Error: first parameter needs to be either a string or a React class.");
-	                return this;
-	            }
-	        }
+	        if (_utils2["default"].hasDocument()) {
+	            var _len4, styles, _key4;
 	
-	        var currentStyles = {},
-	            styleTag = document.createElement("style"),
-	            str = "";
+	            var _ret2 = (function () {
+	                var prefixedProperties = _prefixer.getPrefixedProperties();
+	                var jsPrefix = _prefixer.getJsPrefix();
 	
-	        if (_utils2["default"].isObject(id)) {
-	            id = id.displayName;
+	                if (!_utils2["default"].isString(id) && _utils2["default"].isObject(id)) {
+	                    if (id.displayName) {
+	                        id = id.displayName;
+	                    } else {
+	                        console.error("Error: the object you passed needs to have a displayName property to create a stylesheet.");
+	                        return {
+	                            v: _this2
+	                        };
+	                    }
+	                } else {
+	                    if (_utils2["default"].isUndefined(id)) {
+	                        console.error("Error: generated stylesheets need to be given an id.");
+	                        return {
+	                            v: _this2
+	                        };
+	                    } else if (!_utils2["default"].isString(id)) {
+	                        console.error("Error: first parameter needs to be either a string or a React class.");
+	                        return {
+	                            v: _this2
+	                        };
+	                    }
+	                }
 	
-	            if (_utils2["default"].isUndefined(id)) {
-	                console.error("Error: first parameter needs to be either a string or a React class.");
-	                return this;
-	            }
-	        }
+	                var currentStyles = {},
+	                    styleTag = document.createElement("style"),
+	                    str = "";
 	
-	        if (!_utils2["default"].isUndefined(this.$$stylesheets[id])) {
-	            styleTag = document.getElementById(id);
-	            currentStyles = this.$$stylesheets[id];
-	        }
+	                if (_utils2["default"].isObject(id)) {
+	                    id = id.displayName;
 	
-	        styleTag.type = "text/css";
-	        styleTag.id = id;
+	                    if (_utils2["default"].isUndefined(id)) {
+	                        console.error("Error: first parameter needs to be either a string or a React class.");
+	                        return {
+	                            v: _this2
+	                        };
+	                    }
+	                }
 	
-	        for (var _len4 = arguments.length, styles = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-	            styles[_key4 - 1] = arguments[_key4];
-	        }
+	                if (!_utils2["default"].isUndefined(_this2.$$stylesheets[id])) {
+	                    styleTag = document.getElementById(id);
+	                    currentStyles = _this2.$$stylesheets[id];
+	                }
 	
-	        _utils2["default"].forEach(styles, function (block) {
-	            if (_utils2["default"].isObject(block)) {
-	                _utils2["default"].forIn(block, function (style, key) {
-	                    var cleanStyle = {};
+	                styleTag.type = "text/css";
+	                styleTag.id = id;
 	
-	                    str += key + "{";
+	                for (_len4 = _arguments2.length, styles = Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+	                    styles[_key4 - 1] = _arguments2[_key4];
+	                }
 	
-	                    _utils2["default"].forIn(style, function (value, prop) {
-	                        if (!noPxAdded.test(value) && _utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(prop) === -1) {
-	                            value = value + "px";
-	                        }
+	                _utils2["default"].forEach(styles, function (block) {
+	                    if (_utils2["default"].isObject(block)) {
+	                        _utils2["default"].forIn(block, function (style, key) {
+	                            var cleanStyle = {};
 	
-	                        if (prefixedProperties.indexOf(prop) !== -1) {
-	                            prop = jsPrefix + prop.charAt(0).toUpperCase() + prop.slice(1);
-	                        }
+	                            str += key + "{";
 	
-	                        cleanStyle[prop] = value;
-	                    });
+	                            _utils2["default"].forIn(style, function (value, prop) {
+	                                if (!noPxAdded.test(value) && _utils2["default"].isNumber(value) && _unitlessValues2["default"].indexOf(prop) === -1) {
+	                                    value = value + "px";
+	                                }
 	
-	                    _utils2["default"].forIn(cleanStyle, function (value, prop) {
-	                        str += _utils2["default"].kebabCase(prop) + ":" + value + ";";
-	                    });
+	                                if (prefixedProperties.indexOf(prop) !== -1) {
+	                                    prop = jsPrefix + prop.charAt(0).toUpperCase() + prop.slice(1);
+	                                }
 	
-	                    str += "}";
+	                                cleanStyle[prop] = value;
+	                            });
+	
+	                            _utils2["default"].forIn(cleanStyle, function (value, prop) {
+	                                str += _utils2["default"].kebabCase(prop) + ":" + value + ";";
+	                            });
+	
+	                            str += "}";
+	                        });
+	
+	                        currentStyles = _combine2["default"](currentStyles, block);
+	                    }
 	                });
 	
-	                currentStyles = _combine2["default"](currentStyles, block);
-	            }
-	        });
+	                _this2.$$stylesheets[id] = currentStyles;
+	                styleTag.textContent = _sqwish2["default"](str);
 	
-	        this.$$stylesheets[id] = currentStyles;
-	        styleTag.textContent = _sqwish2["default"](str);
+	                document.head.appendChild(styleTag);
 	
-	        document.head.appendChild(styleTag);
+	                return {
+	                    v: _this2
+	                };
+	            })();
 	
-	        return this;
+	            if (typeof _ret2 === "object") return _ret2.v;
+	        }
 	    }
 	};
 	
@@ -387,10 +409,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	var bix = Object.create(bixPrototype);
 	
 	function delayRenderOnResize() {
-	    window.setTimeout(_utils2["default"].bind(bix.render, bix), 1);
+	    if (_utils2["default"].hasWindow()) {
+	        window.setTimeout(_utils2["default"].bind(bix.render, bix), 1);
+	    }
 	}
 	
-	window.addEventListener("resize", delayRenderOnResize);
+	if (_utils2["default"].hasWindow()) {
+	    window.addEventListener("resize", delayRenderOnResize);
+	}
 	
 	setProperty.readonlyHidden(bix, "$$components", {});
 	setProperty.readonlyHidden(bix, "$$guids", []);
@@ -424,8 +450,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _utils2 = _interopRequireDefault(_utils);
 	
 	exports["default"] = function () {
-	    var finalStyle = {},
-	        prefix = _prefixer2["default"]();
+	    var prefix = _prefixer2["default"]();
+	
+	    var finalStyle = {};
 	
 	    for (var _len = arguments.length, styles = Array(_len), _key = 0; _key < _len; _key++) {
 	        styles[_key] = arguments[_key];
@@ -469,8 +496,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var prefixer = new _inlineStylePrefixer2["default"](),
-	    properties = [];
+	var properties = [],
+	    prefixer = undefined;
 	
 	function populatePrefixedProperties() {
 	    var prefixedProperties = [];
@@ -504,6 +531,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function getPrefixer() {
+	    if (!prefixer) {
+	        setPrefixerByUserAgent();
+	    }
+	
 	    return _utils2["default"].bind(prefixer.prefix, this);
 	}
 	
@@ -1619,8 +1650,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            arr = Array.prototype.slice.call(arr);
 	        }
 	
-	        var i = 0,
-	            len = arr.length;
+	        var len = arr.length;
+	
+	        var i = 0;
 	
 	        for (; i < len; i++) {
 	            if (cb(arr[i], i, arr) === false) {
@@ -1642,6 +1674,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.forEach(Object.keys(obj), function (key) {
 	            return cb(obj[key], key, obj);
 	        });
+	    },
+	
+	    hasDocument: function hasDocument() {
+	        return typeof document !== "undefined";
+	    },
+	
+	    hasWindow: function hasWindow() {
+	        return typeof window !== "undefined";
 	    },
 	
 	    isArguments: function isArguments(obj) {
@@ -1701,7 +1741,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    merge: function merge(target) {
 	        var _this = this;
 	
-	        var dest;
+	        var dest = undefined;
 	
 	        if (this.isArray(target)) {
 	            if (this.isArray(target)) {
@@ -1882,12 +1922,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var cryptoObj = window.crypto || window.msCrypto;
+	/**
+	 *
+	 * @todo import crypto and use getRandomBytes
+	 */
+	var getRandomValues = _utils2["default"].hasWindow() ? (window.crypto || window.msCrypto).getRandomValues : undefined;
+	var performance = _utils2["default"].hasWindow() ? window.performance : undefined;
 	
 	function guid() {
-	    if (cryptoObj && window.Uint8Array) {
+	    if (getRandomValues && Uint8Array) {
 	        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
-	            var r = cryptoObj.getRandomValues(new Uint8Array(1))[0] % 16 | 0,
+	            var r = getRandomValues(new Uint8Array(1))[0] % 16 | 0,
 	                v = c === "x" ? r : r & 0x3 | 0x8;
 	
 	            return v.toString(16);
@@ -1896,7 +1941,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var d = new Date().getTime();
 	
-	    if (window.performance && _utils2["default"].isFunction(window.performance.now)) {
+	    if (performance && _utils2["default"].isFunction(performance.now)) {
 	        d += window.performance.now();
 	    }
 	
@@ -2140,8 +2185,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	                var _props = this.props;
 	                var children = _props.children;
 	                var style = _props.style;
+	                var userAgent = _props.userAgent;
 	
-	                var otherProps = _objectWithoutProperties(_props, ["children", "style"]);
+	                var otherProps = _objectWithoutProperties(_props, ["children", "style", "userAgent"]);
 	
 	                style = prefix(style);
 	
@@ -2168,6 +2214,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                        return _react2["default"].createElement(
 	                            Element,
 	                            _extends({
+	                                radiumConfig: { userAgent: userAgent },
 	                                style: [style]
 	                            }, otherProps),
 	                            children
@@ -3950,8 +3997,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // into combined rules
 	
 	    // store global dict of all rules
-	    var ruleList = {},
-	        rules = css.match(/([^{]+\{[^}]+\})+?/g);
+	    var rules = css.match(/([^{]+\{[^}]+\})+?/g);
+	
+	    var ruleList = {};
 	
 	    // lets find the dups
 	    _utils2["default"].forEach(rules, function (rule) {

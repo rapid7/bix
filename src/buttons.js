@@ -6,7 +6,7 @@
 
 import variables from "./variables";
 
-let buttons = {
+export default {
     button:{
         border:"1px solid " + variables.borderColor,
         backgroundColor:variables.backgroundColor,
@@ -23,7 +23,7 @@ let buttons = {
         textDecoration:"none",
         textTransform:"uppercase",
         transition:"background-color " + variables.transitionTiming + " " + variables.transitionEase + ", color " +
-            variables.transitionTiming + " " + variables.transitionEase,
+        variables.transitionTiming + " " + variables.transitionEase,
         userSelect:"none",
         verticalAlign:"middle",
         whiteSpace:"nowrap",
@@ -38,5 +38,3 @@ let buttons = {
         }
     }
 };
-
-export default buttons;

@@ -27,8 +27,9 @@ export default {
             arr = Array.prototype.slice.call(arr);
         }
 
-        let i = 0,
-            len = arr.length;
+        const len = arr.length;
+
+        let i = 0;
 
         for (; i < len; i++) {
             if (cb(arr[i], i, arr) === false) {
@@ -50,6 +51,14 @@ export default {
         this.forEach(Object.keys(obj), (key) => {
             return cb(obj[key], key, obj);
         });
+    },
+
+    hasDocument() {
+        return typeof document !== "undefined";
+    },
+
+    hasWindow() {
+        return typeof window !== "undefined";
     },
 
     isArguments(obj) {
@@ -81,13 +90,13 @@ export default {
     },
 
     isNumber(obj) {
-        let numObj = parseFloat(obj.toString().replace(/,/g, "."));
+        const numObj = parseFloat(obj.toString().replace(/,/g, "."));
 
         return !this.isNaN(numObj) && toString.call(numObj) === "[object Number]";
     },
 
     isObject(obj) {
-        var type = typeof obj;
+        const type = typeof obj;
 
         return type === "function" || type === "object" && !!obj;
     },
@@ -107,7 +116,7 @@ export default {
     },
 
     merge(target, ...sources) {
-        var dest;
+        let dest;
 
         if (this.isArray(target)) {
             if (this.isArray(target)) {

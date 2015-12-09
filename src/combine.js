@@ -10,8 +10,9 @@ import {
 import utils from "./utils";
 
 export default function(...styles) {
-    let finalStyle = {},
-        prefix = getPrefixer();
+    const prefix = getPrefixer();
+
+    let finalStyle = {};
 
     utils.forEach(styles, (style) => {
         finalStyle = utils.merge(finalStyle, prefix(style));

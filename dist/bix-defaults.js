@@ -138,11 +138,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _variables2 = _interopRequireDefault(_variables);
 	
-	var disabled = {
+	var DISABLED = {
 	    cursor: "not-allowed",
 	    opacity: 0.4
-	},
-	    readonly = {
+	};
+	
+	var READONLY = {
 	    backgroundColor: "#eee",
 	    color: "#aaa",
 	    cursor: "default"
@@ -208,13 +209,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    setDisabled: function setDisabled(element) {
 	        var prefix = _prefixer2["default"]();
 	
-	        return setStatic(prefix(_utils2["default"].merge(element, disabled)));
+	        return setStatic(prefix(_utils2["default"].merge(element, DISABLED)));
 	    },
 	
 	    setReadonly: function setReadonly(element) {
 	        var prefix = _prefixer2["default"]();
 	
-	        return setStatic(prefix(_utils2["default"].merge(element, readonly)));
+	        return setStatic(prefix(_utils2["default"].merge(element, READONLY)));
 	    },
 	
 	    setStatic: setStatic,
@@ -260,8 +261,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _utils2 = _interopRequireDefault(_utils);
 	
-	var prefixer = new _inlineStylePrefixer2["default"](),
-	    properties = [];
+	var properties = [],
+	    prefixer = undefined;
 	
 	function populatePrefixedProperties() {
 	    var prefixedProperties = [];
@@ -295,6 +296,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function getPrefixer() {
+	    if (!prefixer) {
+	        setPrefixerByUserAgent();
+	    }
+	
 	    return _utils2["default"].bind(prefixer.prefix, this);
 	}
 	
@@ -1410,8 +1415,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            arr = Array.prototype.slice.call(arr);
 	        }
 	
-	        var i = 0,
-	            len = arr.length;
+	        var len = arr.length;
+	
+	        var i = 0;
 	
 	        for (; i < len; i++) {
 	            if (cb(arr[i], i, arr) === false) {
@@ -1433,6 +1439,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.forEach(Object.keys(obj), function (key) {
 	            return cb(obj[key], key, obj);
 	        });
+	    },
+	
+	    hasDocument: function hasDocument() {
+	        return typeof document !== "undefined";
+	    },
+	
+	    hasWindow: function hasWindow() {
+	        return typeof window !== "undefined";
 	    },
 	
 	    isArguments: function isArguments(obj) {
@@ -1492,7 +1506,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    merge: function merge(target) {
 	        var _this = this;
 	
-	        var dest;
+	        var dest = undefined;
 	
 	        if (this.isArray(target)) {
 	            if (this.isArray(target)) {
@@ -1623,7 +1637,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _variables2 = _interopRequireDefault(_variables);
 	
-	var buttons = {
+	exports["default"] = {
 	    button: {
 	        border: "1px solid " + _variables2["default"].borderColor,
 	        backgroundColor: _variables2["default"].backgroundColor,
@@ -1654,8 +1668,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	    }
 	};
-	
-	exports["default"] = buttons;
 	module.exports = exports["default"];
 
 /***/ },

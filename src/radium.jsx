@@ -13,7 +13,7 @@ import {
 } from "./prefixer";
 
 export default function(Element) {
-    let prefix = getPrefixer();
+    const prefix = getPrefixer();
 
     if (isReactComponent(Element)) {
         return Radium(Element);
@@ -35,6 +35,7 @@ export default function(Element) {
             var {
                 children,
                 style,
+                userAgent,
                 ...otherProps
                 } = this.props;
 
@@ -62,6 +63,7 @@ export default function(Element) {
                     />;
                 default:
                     return <Element
+                        radiumConfig={{userAgent}}
                         style={[style]}
                         {...otherProps}>
                         {children}
