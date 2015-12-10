@@ -415,6 +415,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	if (_utils2["default"].hasWindow()) {
+	    _prefixer.setPrefixerByUserAgent();
 	    window.addEventListener("resize", delayRenderOnResize);
 	}
 	

@@ -272,6 +272,7 @@ function delayRenderOnResize() {
 }
 
 if (utils.hasWindow()) {
+    setPrefixerByUserAgent();
     window.addEventListener("resize", delayRenderOnResize);
 }
 
