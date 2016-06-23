@@ -52,37 +52,37 @@ let forms = {
     }
 };
 
-forms.inputInline = merge(forms.input, {
+forms.inputInline = merge({}, forms.input, {
     display:'inline-block',
     width:'auto'
 });
 
-forms.inputColor = merge(forms.input, {
+forms.inputColor = merge({}, forms.input, {
     cursor:'pointer',
     height:'2.28em',
     padding:'0.2em 0.5em'
 });
 
-forms.inputColorInline = merge(forms.inputColor, {
+forms.inputColorInline = merge({}, forms.inputColor, {
     display:'inline-block',
     width:'auto'
 });
 
-forms.select = merge(forms.input, {
+forms.select = merge({}, forms.input, {
     cursor:'pointer',
     height:'2.28em'
 });
 
-forms.selectInline = merge(forms.select, {
+forms.selectInline = merge({}, forms.select, {
     display:'inline-block',
     width:'auto'
 });
 
-forms.selectMultiple = merge(forms.input, {
+forms.selectMultiple = merge({}, forms.input, {
     height:'auto'
 });
 
-forms.selectMultipleInline = merge(forms.selectMultiple, {
+forms.selectMultipleInline = merge({}, forms.selectMultiple, {
     display:'inline-block',
     width:'auto'
 });

@@ -18,23 +18,23 @@ let headings = {
     }
 };
 
-headings.h5 = merge(headings.h6, {
+headings.h5 = merge({}, headings.h6, {
     fontSize: ceil(variables.fontSize * 1.25)
 });
 
-headings.h4 = merge(headings.h6, {
+headings.h4 = merge({}, headings.h6, {
     fontSize: ceil(variables.fontSize * 1.5)
 });
 
-headings.h3 = merge(headings.h6, {
+headings.h3 = merge({}, headings.h6, {
     fontSize: ceil(variables.fontSize * 1.8)
 });
 
-headings.h2 = merge(headings.h6, {
+headings.h2 = merge({}, headings.h6, {
     fontSize: ceil(variables.fontSize * 2.35)
 });
 
-headings.h1 = merge(headings.h6, {
+headings.h1 = merge({}, headings.h6, {
     fontSize: ceil(variables.fontSize * 2.8)
 });
 

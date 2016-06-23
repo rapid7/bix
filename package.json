@@ -60,5 +60,5 @@
     "prepublish": "npm run lint && npm run transpile && npm run build &&  npm run build-minified",
     "transpile": "./node_modules/babel-cli/bin/babel.js -d lib/ src/"
   },
-  "version": "1.3.0"
+  "version": "1.3.1"
 }
