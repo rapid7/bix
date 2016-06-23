@@ -15,6 +15,7 @@ import headings from './headings';
 import images from './images';
 
 const bixDefaults = merge(
+    {},
     base,
     buttons,
     dropdowns,

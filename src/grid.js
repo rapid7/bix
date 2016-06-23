@@ -53,7 +53,7 @@ let grid = {
 };
 
 grid.container = (width) => {
-    return merge(grid.containerFixed, {
+    return merge({}, grid.containerFixed, {
         width:width || '100%'
     });
 };

@@ -43,16 +43,16 @@ let dropdowns = {
     }
 };
 
-dropdowns.dropdownRight = merge(dropdowns.dropdown, {
+dropdowns.dropdownRight = merge({}, dropdowns.dropdown, {
     left:'auto',
     right:0
 });
 
-dropdowns.dropdownActive = merge(dropdowns.dropdown, {
+dropdowns.dropdownActive = merge({}, dropdowns.dropdown, {
     display:'block'
 });
 
-dropdowns.dropdownRightActive = merge(dropdowns.dropdownRight, {
+dropdowns.dropdownRightActive = merge({}, dropdowns.dropdownRight, {
     display:'block'
 });
 

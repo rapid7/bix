@@ -19,7 +19,7 @@ export default function(...styles) {
         this[property] = {};
       }
 
-      this[property] = isFunction(value) ? value : merge(this[property], prefix(value));
+      this[property] = isFunction(value) ? value : merge({}, this[property], prefix(value));
     });
   });
 

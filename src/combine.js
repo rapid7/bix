@@ -12,7 +12,7 @@ const combine = (...styles) => {
     let finalStyle = {};
 
     styles.forEach((style) => {
-        finalStyle = merge(finalStyle, prefix(style));
+        finalStyle = merge({}, finalStyle, prefix(style));
     });
 
     return finalStyle;

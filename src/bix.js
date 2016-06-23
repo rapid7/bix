@@ -68,7 +68,7 @@ let bixPrototype = {
             let prefixedStyles = {};
 
             styles.forEach((style) => {
-                prefixedStyles = merge(prefixedStyles, prefix(style));
+                prefixedStyles = merge({}, prefixedStyles, prefix(style));
             });
 
             return prefixedStyles;

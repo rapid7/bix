@@ -81,11 +81,11 @@ export default {
     },
 
     setDisabled(element) {
-        return setStatic(prefix(merge(element, DISABLED)));
+        return setStatic(prefix(merge({}, element, DISABLED)));
     },
 
     setReadonly(element) {
-        return setStatic(prefix(merge(element, READONLY)));
+        return setStatic(prefix(merge({}, element, READONLY)));
     },
 
     setStatic,
