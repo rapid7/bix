@@ -4,86 +4,87 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import variables from "./variables";
-import utils from "./utils";
+import merge from 'lodash/merge';
+
+import variables from './variables';
 
 let forms = {
     fieldset:{
         border:0,
         margin:0,
-        padding:"0.75em 0"
+        padding:'0.75em 0'
 
     },
     form:{
-        display:"block"
+        display:'block'
     },
     formLabel:{
-        display:"block",
-        margin:"0.5em 0 0.2em"
+        display:'block',
+        margin:'0.5em 0 0.2em'
     },
     input:{
         backgroundColor:variables.backgroundColor,
-        border:"1px solid " + variables.borderColor,
+        border:'1px solid ' + variables.borderColor,
         borderRadius:variables.borderRadius,
-        boxShadow:"inset 0 0 3px #ccc",
+        boxShadow:'inset 0 0 3px #ccc',
         color:variables.fontColor,
-        display:"block",
-        lineHeight:"normal",
+        display:'block',
+        lineHeight:'normal',
         outline:0,
-        padding:"0.5em 0.6em",
-        margin:"0.25em 0",
-        width:"100%",
-        ":active":{
-            boxShadow:"inset 0 0 3px #337ab7"
+        padding:'0.5em 0.6em',
+        margin:'0.25em 0',
+        width:'100%',
+        ':active':{
+            boxShadow:'inset 0 0 3px #337ab7'
         },
-        ":focus":{
-            boxShadow:"inset 0 0 3px #337ab7"
+        ':focus':{
+            boxShadow:'inset 0 0 3px #337ab7'
         }
     },
     legend:{
-        borderColor:"#e5e5e5",
-        borderStyle:"solid",
+        borderColor:'#e5e5e5',
+        borderStyle:'solid',
         borderBottomWidth:1,
         color:variables.fontColor,
-        display:"block",
-        marginBottom:"0.3em",
-        padding:"0.3em 0"
+        display:'block',
+        marginBottom:'0.3em',
+        padding:'0.3em 0'
     }
 };
 
-forms.inputInline = utils.merge(forms.input, {
-    display:"inline-block",
-    width:"auto"
+forms.inputInline = merge(forms.input, {
+    display:'inline-block',
+    width:'auto'
 });
 
-forms.inputColor = utils.merge(forms.input, {
-    cursor:"pointer",
-    height:"2.28em",
-    padding:"0.2em 0.5em"
+forms.inputColor = merge(forms.input, {
+    cursor:'pointer',
+    height:'2.28em',
+    padding:'0.2em 0.5em'
 });
 
-forms.inputColorInline = utils.merge(forms.inputColor, {
-    display:"inline-block",
-    width:"auto"
+forms.inputColorInline = merge(forms.inputColor, {
+    display:'inline-block',
+    width:'auto'
 });
 
-forms.select = utils.merge(forms.input, {
-    cursor:"pointer",
-    height:"2.28em"
+forms.select = merge(forms.input, {
+    cursor:'pointer',
+    height:'2.28em'
 });
 
-forms.selectInline = utils.merge(forms.select, {
-    display:"inline-block",
-    width:"auto"
+forms.selectInline = merge(forms.select, {
+    display:'inline-block',
+    width:'auto'
 });
 
-forms.selectMultiple = utils.merge(forms.input, {
-    height:"auto"
+forms.selectMultiple = merge(forms.input, {
+    height:'auto'
 });
 
-forms.selectMultipleInline = utils.merge(forms.selectMultiple, {
-    display:"inline-block",
-    width:"auto"
+forms.selectMultipleInline = merge(forms.selectMultiple, {
+    display:'inline-block',
+    width:'auto'
 });
 
 forms.textarea = forms.input;

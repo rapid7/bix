@@ -4,46 +4,47 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import Prefixer from "inline-style-prefixer";
-
-import utils from "./utils";
+import Prefixer from 'inline-style-prefixer';
 
 let properties = [],
     prefixer;
 
-function populatePrefixedProperties() {
+const populatePrefixedProperties = () => {
     let prefixedProperties = [];
 
-    utils.forIn(prefixer._requiresPrefix, (requiresPrefix, property) => {
+    Object.keys(prefixer._requiresPrefix).forEach((property) => {
+        const requiresPrefix = prefixer._requiresPrefix[property];
+
         if (requiresPrefix) {
             prefixedProperties[prefixedProperties.length] = property;
         }
     });
 
     return prefixedProperties;
-}
-
-export function getCssPrefix() {
-    return prefixer.cssPrefix;
-}
-
-export function getJsPrefix() {
-    return prefixer.jsPrefix;
-}
-
-export function getPrefixedProperties() {
-    return properties;
-}
-
-export function setPrefixerByUserAgent(userAgent) {
-    prefixer = new Prefixer(userAgent);
-    properties = populatePrefixedProperties();
-}
-
-export default function getPrefixer() {
-    if (!prefixer) {
-        setPrefixerByUserAgent();
-    }
-
-    return utils.bind(prefixer.prefix, this);
 };
+
+export const getCssPrefix = () => {
+    return prefixer.cssPrefix;
+};
+
+export const getJsPrefix = () => {
+    return prefixer.jsPrefix;
+};
+
+export const getPrefixedProperties = () => {
+    return properties;
+};
+
+export const setPrefixerByUserAgent = (userAgent) => {
+    prefixer = new Prefixer({
+        userAgent
+    });
+
+    properties = populatePrefixedProperties();
+};
+
+const prefix = (value) => {
+    return prefixer.prefix(value);
+};
+
+export default prefix;

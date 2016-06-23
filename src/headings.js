@@ -4,36 +4,38 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import variables from "./variables";
-import utils from "./utils";
+import ceil from 'lodash/ceil';
+import merge from 'lodash/merge';
+
+import variables from './variables';
 
 let headings = {
     h6:{
-        display:"block",
-        fontSize:variables.fontSize,
-        fontWeight:variables.headingFontWeight,
-        margin:variables.headingMargin
+        display: 'block',
+        fontSize: variables.fontSize,
+        fontWeight: variables.headingFontWeight,
+        margin: variables.headingMargin
     }
 };
 
-headings.h5 = utils.merge(headings.h6, {
-    fontSize:utils.ceil(variables.fontSize * 1.25)
+headings.h5 = merge(headings.h6, {
+    fontSize: ceil(variables.fontSize * 1.25)
 });
 
-headings.h4 = utils.merge(headings.h6, {
-    fontSize:utils.ceil(variables.fontSize * 1.5)
+headings.h4 = merge(headings.h6, {
+    fontSize: ceil(variables.fontSize * 1.5)
 });
 
-headings.h3 = utils.merge(headings.h6, {
-    fontSize:utils.ceil(variables.fontSize * 1.8)
+headings.h3 = merge(headings.h6, {
+    fontSize: ceil(variables.fontSize * 1.8)
 });
 
-headings.h2 = utils.merge(headings.h6, {
-    fontSize:utils.ceil(variables.fontSize * 2.35)
+headings.h2 = merge(headings.h6, {
+    fontSize: ceil(variables.fontSize * 2.35)
 });
 
-headings.h1 = utils.merge(headings.h6, {
-    fontSize:utils.ceil(variables.fontSize * 2.8)
+headings.h1 = merge(headings.h6, {
+    fontSize: ceil(variables.fontSize * 2.8)
 });
 
 export default headings;

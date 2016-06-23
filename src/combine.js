@@ -4,19 +4,18 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import {
-    default as getPrefixer
-} from "./prefixer";
-import utils from "./utils";
+import merge from 'lodash/merge';
 
-export default function(...styles) {
-    const prefix = getPrefixer();
+import prefix from './prefixer';
 
+const combine = (...styles) => {
     let finalStyle = {};
 
-    utils.forEach(styles, (style) => {
-        finalStyle = utils.merge(finalStyle, prefix(style));
+    styles.forEach((style) => {
+        finalStyle = merge(finalStyle, prefix(style));
     });
 
     return finalStyle;
-}
+};
+
+export default combine;

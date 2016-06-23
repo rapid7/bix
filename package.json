@@ -5,25 +5,35 @@
   },
   "dependencies": {
     "crypto": "0.0.3",
-    "inline-style-prefixer": "0.5.1",
-    "radium": "^0.15.3",
-    "react": "^0.14.2"
+    "inline-style-prefixer": ">=1.0.0",
+    "lodash": "^4.13.1",
+    "min.css": "^1.3.0",
+    "radium": ">=0.15.0",
+    "react": ">=0.14.0"
   },
   "description": "Tools to streamline inline style management for React elements",
   "devDependencies": {
-    "babel": "5.8.34",
-    "babel-core": "5.8.34",
-    "babel-eslint": "4.1.5",
-    "babel-loader": "5.3.3",
-    "css-loader": "0.23.0",
-    "eslint": "1.9.0",
-    "eslint-friendly-formatter": "1.2.2",
-    "eslint-loader": "1.1.1",
-    "eslint-plugin-react": "3.8.0",
-    "lodash": "3.10.1",
-    "style-loader": "0.13.0",
-    "webpack": "1.12.6",
-    "webpack-dev-server": "1.12.1"
+    "babel": "6.5.2",
+    "babel-cli": "^6.10.1",
+    "babel-core": "6.10.4",
+    "babel-eslint": "6.1.0",
+    "babel-loader": "6.2.4",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "css-loader": "0.23.1",
+    "eslint": "2.13.1",
+    "eslint-friendly-formatter": "2.0.5",
+    "eslint-loader": "1.3.0",
+    "eslint-plugin-react": "5.2.2",
+    "html-webpack-plugin": "^2.21.0",
+    "lodash": "4.13.1",
+    "react-dom": "^15.1.0",
+    "style-loader": "0.13.1",
+    "webpack": "1.13.1",
+    "webpack-dev-server": "1.14.1"
   },
   "homepage": "https://github.com/rapid7/bix#readme",
   "keywords": [
@@ -43,12 +53,12 @@
     "url": "git+https://github.com/rapid7/bix.git"
   },
   "scripts": {
-    "build": "node webpack.build.js",
-    "build-minified": "node webpack.build.minified.js",
-    "compile": "babel -d lib/ src/",
-    "dev": "webpack-dev-server",
-    "dist": "npm run compile && npm run build &&  npm run build-minified",
-    "prepublish": "npm run compile"
+    "build": "NODE_ENV=development node webpack.build.js",
+    "build-minified": "NODE_ENV=production node webpack.build.minified.js",
+    "dev": "NODE_ENV=development webpack-dev-server --progress --profile",
+    "lint": "NODE_ENV=test eslint src",
+    "prepublish": "npm run lint && npm run transpile && npm run build &&  npm run build-minified",
+    "transpile": "./node_modules/babel-cli/bin/babel.js -d lib/ src/"
   },
-  "version": "1.2.9"
+  "version": "1.3.0"
 }

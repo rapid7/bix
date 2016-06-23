@@ -4,11 +4,12 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import React from "react";
+import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
+import React from 'react';
 
-import utils from "./utils";
+const isReactComponent = (obj) => {
+    return (isFunction(obj) && Object.getPrototypeOf(obj) === React.Component) || (isObject(obj) && obj._reactInternalInstance);
+};
 
-export default function(obj) {
-    return (utils.isFunction(obj) && Object.getPrototypeOf(obj) === React.Component) ||
-        (utils.isObject(obj) && obj._reactInternalInstance);
-}
+export default isReactComponent;

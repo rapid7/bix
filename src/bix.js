@@ -4,52 +4,45 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import combine from "./combine";
-import extend from "./extend";
-import isReactComponent from "./isReactComponent";
-import guid from "./guid";
-import normalize from "./normalize";
-import {
+import bind from 'lodash/bind';
+import isNumber from 'lodash/isNumber';
+import isObject from 'lodash/isObject';
+import isString from 'lodash/isString';
+import isUndefined from 'lodash/isUndefined';
+import kebabCase from 'lodash/kebabCase';
+import merge from 'lodash/merge';
+import mincss from 'min.css';
+
+import combine from './combine';
+import extend from './extend';
+import isReactComponent from './isReactComponent';
+import guid from './guid';
+import normalize from './normalize';
+import prefix, {
     getJsPrefix,
     getPrefixedProperties,
-    default as getPrefixer,
     setPrefixerByUserAgent
-} from "./prefixer";
-import radium from "./radium";
-import sqwish from "./sqwish";
-import unitlessValues from "./unitlessValues";
-import utils from "./utils";
+} from './prefixer';
+import radium from './radium';
+import unitlessValues from './unitlessValues';
+import {
+    hasDocument,
+    hasWindow
+} from './utils';
+
+const OBJECT_KEYS = Object.keys;
 
 // functions to set properties in different ways
-const noPxAdded = /(px|vh|vw|em|[%]|ex|cm|mm|in|pt|pc|ch|rem|vmin|vmax)/,
-    setProperty = {
-        hidden(obj, prop, value) {
-            Object.defineProperty(obj, prop, {
-                configurable: false,
-                enumerable: false,
-                value: value,
-                writable: true
-            });
-        },
+const NO_PX_ADDED = /(px|vh|vw|em|[%]|ex|cm|mm|in|pt|pc|ch|rem|vmin|vmax)/;
 
-        permanent(obj, prop, value) {
-            Object.defineProperty(obj, prop, {
-                configurable: false,
-                enumerable: true,
-                value: value,
-                writable: true
-            });
-        },
-
-        readonlyHidden(obj, prop, value) {
-            Object.defineProperty(obj, prop, {
-                configurable: false,
-                enumerable: false,
-                value: value,
-                writable: false
-            });
-        }
-    };
+const setReadOnlyProperty = (object, property, value) => {
+    Object.defineProperty(object, property, {
+        configurable: false,
+        enumerable: false,
+        value: value,
+        writable: false
+    });
+};
 
 let bixPrototype = {
         combine,
@@ -58,12 +51,12 @@ let bixPrototype = {
 
         normalize(...args) {
             if (!args.length || args[0] !== false) {
-                this.stylesheet("normalize-css", normalize);
+                this.stylesheet('normalize-css', normalize);
 
-                this.stylesheet("bix-defaults", {
-                    "*, *:after, *:before":{
-                        boxSizing:"border-box",
-                        position:"relative"
+                this.stylesheet('bix-defaults', {
+                    '*, *:after, *:before':{
+                        boxSizing:'border-box',
+                        position:'relative'
                     }
                 });
             }
@@ -72,12 +65,10 @@ let bixPrototype = {
         },
 
         prefix(...styles) {
-            const prefix = getPrefixer();
-
             let prefixedStyles = {};
 
-            utils.forEach(styles, (style) => {
-                prefixedStyles = utils.merge(prefixedStyles, prefix(style));
+            styles.forEach((style) => {
+                prefixedStyles = merge(prefixedStyles, prefix(style));
             });
 
             return prefixedStyles;
@@ -89,11 +80,11 @@ let bixPrototype = {
             if (isReactComponent(component)) {
                 component.forceUpdate();
             } else {
-                utils.forIn(this.$$components, (componentObj) => {
+                for (let componentObj of this.$$components) {
                     if (componentObj.renderOnResize && isReactComponent(componentObj.component)) {
                         componentObj.component.forceUpdate();
                     }
-                });
+                }
             }
         },
 
@@ -123,25 +114,34 @@ let bixPrototype = {
         },
 
         styles(component, ...styles) {
-            if (utils.isUndefined(component)) {
-                console.error("Error: no component has been specified.");
+            if (isUndefined(component)) {
+                /* eslint-disable no-console */
+                console.error('Error: no component has been specified.');
+                /* eslint-enable */
+
                 return this;
             }
 
-            if (utils.isString(component)) {
+            if (isString(component)) {
                 return this.$$components[component] && this.$$components[component].styles;
             }
 
-            if (utils.isObject(component)) {
-                if (utils.isUndefined(component._reactInternalInstance)) {
-                    console.error("Error: object passed is not a React constructor.");
+            if (isObject(component)) {
+                if (isUndefined(component._reactInternalInstance)) {
+                    /* eslint-disable no-console */
+                    console.error('Error: object passed is not a React constructor.');
+                    /* eslint-enable */
+
                     return this;
                 }
 
                 const name = component.displayName;
 
-                if (utils.isUndefined(name)) {
-                    console.error("Error: you need to specify a displayName property on your React class if you want to assign styles to bix.");
+                if (isUndefined(name)) {
+                    /* eslint-disable no-console */
+                    console.error('Error: you need to specify a displayName property on your React class if you want to assign styles to bix.');
+                    /* eslint-enable */
+
                     return this;
                 }
 
@@ -149,17 +149,17 @@ let bixPrototype = {
                     return this.$$components[name] && this.$$components[name].styles;
                 }
 
-                if (utils.isUndefined(this.$$components[name])) {
+                if (isUndefined(this.$$components[name])) {
                     this.$$components[name] = {};
                 }
 
                 this.$$components[name].component = component;
 
-                if (utils.isUndefined(this.$$components[name].styles)) {
+                if (isUndefined(this.$$components[name].styles)) {
                     this.$$components[name].styles = {};
                 }
 
-                utils.forEach(styles, (style) => {
+                styles.forEach((style) => {
                     this.$$components[name].styles = combine(this.$$components[name].styles, style);
                 });
             }
@@ -168,58 +168,74 @@ let bixPrototype = {
         },
 
         stylesheet(id, ...styles) {
-            if (utils.hasDocument()) {
+            if (hasDocument()) {
                 const prefixedProperties = getPrefixedProperties();
                 const jsPrefix = getJsPrefix();
 
-                if (!utils.isString(id) && utils.isObject(id)) {
+                if (!isString(id) && isObject(id)) {
                     if (id.displayName) {
                         id = id.displayName;
                     } else {
-                        console.error("Error: the object you passed needs to have a displayName property to create a stylesheet.");
+                        /* eslint-disable no-console */
+                        console.error('Error: the object you passed needs to have a displayName property to create a stylesheet.');
+                        /* eslint-enable */
+
                         return this;
                     }
                 } else {
-                    if (utils.isUndefined(id)) {
-                        console.error("Error: generated stylesheets need to be given an id.");
+                    if (isUndefined(id)) {
+                        /* eslint-disable no-console */
+                        console.error('Error: generated stylesheets need to be given an id.');
+                        /* eslint-enable */
+
                         return this;
-                    } else if (!utils.isString(id)) {
-                        console.error("Error: first parameter needs to be either a string or a React class.");
+                    } else if (!isString(id)) {
+                        /* eslint-disable no-console */
+                        console.error('Error: first parameter needs to be either a string or a React class.');
+                        /* eslint-enable */
+
                         return this;
                     }
                 }
 
                 let currentStyles = {},
-                    styleTag = document.createElement("style"),
-                    str = "";
+                    styleTag = document.createElement('style'),
+                    str = '';
 
-                if (utils.isObject(id)) {
+                if (isObject(id)) {
                     id = id.displayName;
 
-                    if (utils.isUndefined(id)) {
-                        console.error("Error: first parameter needs to be either a string or a React class.");
+                    if (isUndefined(id)) {
+                        /* eslint-disable no-console */
+                        console.error('Error: first parameter needs to be either a string or a React class.');
+                        /* eslint-enable */
+
                         return this;
                     }
                 }
 
-                if (!utils.isUndefined(this.$$stylesheets[id])) {
+                if (!isUndefined(this.$$stylesheets[id])) {
                     styleTag = document.getElementById(id);
                     currentStyles = this.$$stylesheets[id];
                 }
 
-                styleTag.type = "text/css";
+                styleTag.type = 'text/css';
                 styleTag.id = id;
 
-                utils.forEach(styles, (block) => {
-                    if (utils.isObject(block)) {
-                        utils.forIn(block, (style, key) => {
+                styles.forEach((block) => {
+                    if (isObject(block)) {
+                        OBJECT_KEYS(block).forEach((key) => {
+                            const style = block[key];
+
                             let cleanStyle = {};
 
-                            str += key + "{";
+                            str += key + '{';
 
-                            utils.forIn(style, (value, prop) => {
-                                if (!noPxAdded.test(value) && utils.isNumber(value) && unitlessValues.indexOf(prop) === -1) {
-                                    value = value + "px";
+                            OBJECT_KEYS(style).forEach((prop) => {
+                                let value = style[prop];
+
+                                if (!NO_PX_ADDED.test(value) && isNumber(value) && unitlessValues.indexOf(prop) === -1) {
+                                    value = `${value}px`;
                                 }
 
                                 if (prefixedProperties.indexOf(prop) !== -1) {
@@ -229,11 +245,11 @@ let bixPrototype = {
                                 cleanStyle[prop] = value;
                             });
 
-                            utils.forIn(cleanStyle, (value, prop) => {
-                                str += utils.kebabCase(prop) + ":" + value + ";";
+                            OBJECT_KEYS(cleanStyle).forEach((prop) => {
+                                str += `-${kebabCase(prop)}:${cleanStyle[prop]};`;
                             });
 
-                            str += "}";
+                            str += '}';
                         });
 
                         currentStyles = combine(currentStyles, block);
@@ -241,7 +257,8 @@ let bixPrototype = {
                 });
 
                 this.$$stylesheets[id] = currentStyles;
-                styleTag.textContent = sqwish(str);
+                
+                styleTag.textContent = mincss(str);
 
                 document.head.appendChild(styleTag);
 
@@ -250,7 +267,7 @@ let bixPrototype = {
         }
     };
 
-Object.defineProperty(bixPrototype, "guid", {
+Object.defineProperty(bixPrototype, 'guid', {
     get() {
         const newGuid = guid();
 
@@ -266,18 +283,19 @@ Object.defineProperty(bixPrototype, "guid", {
 let bix = Object.create(bixPrototype);
 
 function delayRenderOnResize() {
-    if (utils.hasWindow()) {
-        window.setTimeout(utils.bind(bix.render, bix), 1);
+    if (hasWindow()) {
+        window.setTimeout(bind(bix.render, bix), 1);
     }
 }
 
-if (utils.hasWindow()) {
+if (hasWindow()) {
     setPrefixerByUserAgent();
-    window.addEventListener("resize", delayRenderOnResize);
+
+    window.addEventListener('resize', delayRenderOnResize);
 }
 
-setProperty.readonlyHidden(bix, "$$components", {});
-setProperty.readonlyHidden(bix, "$$guids", []);
-setProperty.readonlyHidden(bix, "$$stylesheets", {});
+setReadOnlyProperty(bix, '$$components', {});
+setReadOnlyProperty(bix, '$$guids', []);
+setReadOnlyProperty(bix, '$$stylesheets', {});
 
 export default bix;
