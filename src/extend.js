@@ -4,23 +4,24 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import {
-    default as getPrefixer
-} from "./prefixer";
-import utils from "./utils";
+import isFunction from 'lodash/isFunction';
+import isObject from 'lodash/isObject';
+import merge from 'lodash/merge';
+
+import prefix from './prefixer';
 
 export default function(...styles) {
-    const prefix = getPrefixer();
+  styles.forEach((style) => {
+    Object.keys(style).forEach((property) => {
+      const value = style[property];
 
-    utils.forEach(styles, (style) => {
-        utils.forIn(style, (value, prop) => {
-            if (!utils.isObject(this[prop])) {
-                this[prop] = {};
-            }
+      if (!isObject(this[property])) {
+        this[property] = {};
+      }
 
-            this[prop] = utils.isFunction(value) ? value : utils.merge(this[prop], prefix(value));
-        });
+      this[property] = isFunction(value) ? value : merge(this[property], prefix(value));
     });
+  });
 
-    return this;
+  return this;
 }

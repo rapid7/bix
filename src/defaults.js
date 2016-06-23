@@ -4,16 +4,17 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import base from "./base";
-import buttons from "./buttons";
-import dropdowns from "./dropdowns";
-import forms from "./forms";
-import grid from "./grid";
-import headings from "./headings";
-import images from "./images";
-import utils from "./utils";
+import merge from 'lodash/merge';
 
-const bixDefaults = utils.merge(
+import base from './base';
+import buttons from './buttons';
+import dropdowns from './dropdowns';
+import forms from './forms';
+import grid from './grid';
+import headings from './headings';
+import images from './images';
+
+const bixDefaults = merge(
     base,
     buttons,
     dropdowns,

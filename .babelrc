@@ -1,9 +1,11 @@
 {
-    "loose":[
-        "es6.forOf",
-        "es6.modules",
-        "es6.properties.computed",
-        "es6.templateLiterals"
+    "plugins":[
+        "transform-decorators-legacy",
+        "add-module-exports"
     ],
-	"stage": 0
+    "presets":[
+        "es2015",
+        "react",
+        "stage-0"
+    ]
 }

@@ -4,19 +4,19 @@
  * proprietary information of Rapid7.
  ******************************************************************************/
 
-import variables from "./variables";
+import variables from './variables';
 
 export default {
     imgCircle:{
-        borderRadius:"50%"
+        borderRadius:'50%'
     },
     imgResponsive:{
-        display:"block",
-        height:"auto",
-        maxWidth:"100%"
+        display:'block',
+        height:'auto',
+        maxWidth:'100%'
     },
     imgThumbnail:{
-        border:"5px solid " + variables.white,
+        border:'5px solid ' + variables.white,
         borderRadius:variables.borderRadius
     }
 };

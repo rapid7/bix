@@ -1,30 +1,39 @@
-var path = require("path"),
-    webpack = require("webpack");
+var path = require('path'),
+    webpack = require('webpack');
 
 module.exports = {
-    cache:true,
+    cache: true,
 
-    debug:true,
+    debug: true,
 
-    devtool:"source-map",
+    devtool: '#cheap-module-eval-source-map',
 
     entry: [
-        path.resolve(__dirname, "src/defaults")
+        path.resolve(__dirname, 'src/defaults')
     ],
 
     eslint:{
-        configFile:"./.eslintrc",
-        emitError:true,
-        failOnError:true,
-        failOnWarning:false,
-        formatter:require("eslint-friendly-formatter")
+        configFile: './.eslintrc',
+        emitError: true,
+        failOnError: true,
+        failOnWarning: true,
+        formatter: require('eslint-friendly-formatter')
+    },
+
+    externals: {
+        'inline-style-prefixer': {
+            amd: 'inline-style-prefixer',
+            commonjs2: 'inline-style-prefixer',
+            commonjs: 'inline-style-prefixer',
+            root: 'Prefixer'
+        }
     },
 
     module: {
         preLoaders: [
             {
                 exclude: /.idea|dist|node_modules/,
-                loader: "eslint-loader",
+                loader: 'eslint-loader',
                 test: /\.js$/
             }
         ],
@@ -32,48 +41,27 @@ module.exports = {
         loaders: [
             {
                 exclude: /node_modules/,
-                loader: "babel",
+                loader: 'babel',
                 test: /\.(js|jsx)?$/
-            }, {
-                loaders:[
-                    "style",
-                    "css"
-                ],
-                test: /\.css$/
             }
 
         ]
     },
 
     output: {
-        filename:"bix-defaults.js",
-        library:"bixDefaults",
-        libraryTarget:"umd",
-        path:path.join(__dirname, "dist")
+        filename:'bix-defaults.js',
+        library:'bixDefaults',
+        libraryTarget:'umd',
+        path:path.join(__dirname, 'dist'),
+        umdNamedDefine: true
     },
 
-    plugins:[
-        new webpack.ProgressPlugin(function(percentage, message) {
-            if (percentage === 0) {
-                console.log("Starting", message);
-            } else if (percentage === 1) {
-                console.log("...complete.", message);
-            } else {
-                console.log(Math.round(percentage * 100) + "%", message);
-            }
-        })
-    ],
+    plugins:[],
 
     resolve:{
         extensions: [
-            "",
-            ".js",
-            ".jsx"
-        ],
-
-        /* Allows you to require("models/myModel") instead of needing relative paths */
-        fallback : [
-            path.join(__dirname, "src")
+            '',
+            '.js'
         ],
 
         root : __dirname
