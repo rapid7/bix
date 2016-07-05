@@ -6,14 +6,28 @@
 
 import React, {
     Component,
-    isValidElement
+    isValidElement,
+    PropTypes
 } from 'react';
 import Radium from 'radium';
 
 import isReactComponent from './isReactComponent';
 import prefix from './prefixer';
 
-export default function(Element) {
+const getConfiguredRadiumElement = (Element, config, props) => {
+    @Radium(config)
+    class RadiumElement extends Component {
+        render() {
+            return (
+                <Element {...props}/>
+            );
+        }
+    }
+
+    return RadiumElement;
+};
+
+const getBixElement = (Element) => {
     if (isReactComponent(Element)) {
         return Radium(Element);
     }
@@ -21,7 +35,17 @@ export default function(Element) {
     const ValidElement = isValidElement(Element) ? Element.type : Element;
 
     @Radium
-    class RadiumBixElement extends Component {
+    class BixElement extends Component {
+        static propTypes = {
+            children: PropTypes.node,
+            style: PropTypes.object,
+            userAgent: PropTypes.string
+        };
+
+        static defaultProps = {
+            style: {}
+        };
+
         render() {
             const {
                 children,
@@ -31,6 +55,14 @@ export default function(Element) {
             } = this.props;
 
             const prefixedStyle = prefix(style);
+            const config = {
+                userAgent
+            };
+
+            let props = {
+                style: prefixedStyle,
+                ...otherProps
+            };
 
             switch (ValidElement) {
                 case 'area':
@@ -48,27 +80,24 @@ export default function(Element) {
                 case 'source':
                 case 'track':
                 case 'wbr':
-                    return (
-                        <ValidElement
-                            radiumConfig={{userAgent}}
-                            style={prefixedStyle}
-                            {...otherProps}
-                        />
-                    );
+                    break;
 
                 default:
-                    return (
-                        <ValidElement
-                            radiumConfig={{userAgent}}
-                            style={prefixedStyle}
-                            {...otherProps}
-                        >
-                            {children}
-                        </ValidElement>
-                    );
+                    props = {
+                        ...props,
+                        children
+                    };
             }
+
+            const ConfiguredRadiumElement = getConfiguredRadiumElement(ValidElement, config, props);
+
+            return (
+                <ConfiguredRadiumElement/>
+            );
         }
     }
 
-    return RadiumBixElement;
+    return BixElement;
 };
+
+export default getBixElement;

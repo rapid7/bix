@@ -12,6 +12,9 @@ const hasWindow = () => {
   return typeof window !== 'undefined';
 };
 
+export {hasDocument};
+export {hasWindow};
+
 export default {
     hasDocument,
     hasWindow

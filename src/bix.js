@@ -80,11 +80,13 @@ let bixPrototype = {
             if (isReactComponent(component)) {
                 component.forceUpdate();
             } else {
-                for (let componentObj of this.$$components) {
+                Object.keys(this.$$components).forEach((key) => {
+                    const componentObj = this.$$components[key];
+
                     if (componentObj.renderOnResize && isReactComponent(componentObj.component)) {
                         componentObj.component.forceUpdate();
                     }
-                }
+                });
             }
         },
 
@@ -257,7 +259,7 @@ let bixPrototype = {
                 });
 
                 this.$$stylesheets[id] = currentStyles;
-                
+
                 styleTag.textContent = mincss(str);
 
                 document.head.appendChild(styleTag);
